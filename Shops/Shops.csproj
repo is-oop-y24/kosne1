@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>5</WarningLevel>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="..\.editorconfig" />
+    <EditorConfigFiles Remove="D:\coding\itmo-mentor\OopLabs-template\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" />
+    <None Include="D:\coding\itmo-mentor\OopLabs-template\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
