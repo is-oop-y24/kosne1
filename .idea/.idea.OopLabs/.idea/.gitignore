@@ -4,7 +4,6 @@
 # Rider ignored files
 /contentModel.xml
 /modules.xml
-/.idea.OopLabs.iml
 /projectSettingsUpdater.xml
 # Editor-based HTTP Client requests
 /httpRequests/
