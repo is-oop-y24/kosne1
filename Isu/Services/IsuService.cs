@@ -149,8 +149,8 @@ namespace Isu.Services
             if (newGroup.ListOfStudents.Count < Group.MaxStudents)
             {
                 student.GetStudentGroup().ListOfStudents.Remove(student);
-                newGroup.ListOfStudents.Add(student);
-                student.ChangeGroup(newGroup);
+                var tempStudent = new Student(student.StudentName, newGroup, student.StudentId);
+                newGroup.ListOfStudents.Add(tempStudent);
             }
             else
             {
