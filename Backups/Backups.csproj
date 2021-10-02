@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="D:\coding\itmo-mentor\OopLabs-template\.editorconfig" />
+    <EditorConfigFiles Remove="..\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
