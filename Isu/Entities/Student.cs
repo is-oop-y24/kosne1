@@ -1,4 +1,4 @@
-﻿namespace Isu.Entities
+namespace Isu.Entities
 {
     public class Student
     {
@@ -10,6 +10,13 @@
             _studentGroup = studentGroup;
             _lastId++;
             StudentId = _lastId;
+        }
+
+        public Student(string studentName, Group studentGroup, int id)
+        {
+            StudentName = studentName;
+            _studentGroup = studentGroup;
+            StudentId = id;
         }
 
         public string StudentName
@@ -25,11 +32,6 @@
         public Group GetStudentGroup()
         {
             return _studentGroup;
-        }
-
-        public void ChangeGroup(Group newGroup)
-        {
-            _studentGroup = newGroup;
         }
     }
 }
