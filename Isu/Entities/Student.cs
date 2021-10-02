@@ -3,10 +3,11 @@
     public class Student
     {
         private static int _lastId = -1;
+        private Group _studentGroup;
         public Student(string studentName, Group studentGroup)
         {
             StudentName = studentName;
-            StudentGroup = studentGroup;
+            _studentGroup = studentGroup;
             _lastId++;
             StudentId = _lastId;
         }
@@ -21,10 +22,14 @@
             get;
         }
 
-        public Group StudentGroup
+        public Group GetStudentGroup()
         {
-            get;
-            set;
+            return _studentGroup;
+        }
+
+        public void ChangeGroup(Group newGroup)
+        {
+            _studentGroup = newGroup;
         }
     }
 }

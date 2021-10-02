@@ -21,8 +21,8 @@ namespace Isu.Tests
         public void AddStudentToGroup_StudentHasGroupAndGroupContainsStudent()
         {
             Group group = _isuService.AddGroup(new GroupName("M3207"));
-            Student student = _isuService.AddStudent(group, "pidoras");
-            if (group.HasStudent("pidoras") && student.StudentGroup == group)
+            Student student = _isuService.AddStudent(group, "Ananin Nikolai");
+            if (group.HasStudent("Ananin Nikolai") && student.GetStudentGroup() == group)
             {
                 Console.WriteLine("OKAY");
             }
@@ -58,16 +58,16 @@ namespace Isu.Tests
         public void TransferStudentToAnotherGroup_GroupChanged()
         {
             Group group = _isuService.AddGroup(new GroupName("M3207"));
-            Student student = _isuService.AddStudent(group, "pidoras");
+            Student student = _isuService.AddStudent(group, "Ananin Nikolai");
             Group newGroup = _isuService.AddGroup(new GroupName("M3202"));
             _isuService.ChangeStudentGroup(student, newGroup);
-            if (!group.HasStudent("pidoras") && newGroup.HasStudent("pidoras"))
+            if (!group.HasStudent("Ananin Nikolai") && newGroup.HasStudent("Ananin Nikolai"))
             {
                 Console.WriteLine("OKAY");
             }
             else
             {
-                throw new IsuException("pidors nagovnokodil");
+                Assert.Fail();
             }
         }
     }

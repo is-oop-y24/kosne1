@@ -51,7 +51,7 @@ namespace Isu.Services
             }
             else
             {
-                if (student.StudentGroup == group)
+                if (student.GetStudentGroup() == group)
                 {
                     throw new IsuException("the student is already in this group.\n");
                 }
@@ -146,9 +146,9 @@ namespace Isu.Services
         {
             if (newGroup.ListOfStudents.Count < Group.MaxStudents)
             {
-                student.StudentGroup.ListOfStudents.Remove(student);
+                student.GetStudentGroup().ListOfStudents.Remove(student);
                 newGroup.ListOfStudents.Add(student);
-                student.StudentGroup = newGroup;
+                student.ChangeGroup(newGroup);
             }
         }
     }
