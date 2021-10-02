@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Isu.Entities;
@@ -8,18 +7,19 @@ namespace Isu.Services
 {
     public class IsuService : IIsuService
     {
+        private List<Course> _fitip;
         public IsuService()
         {
-            Fitip = new List<Course>();
+            _fitip = new List<Course>();
             for (int i = 1; i <= CourseNumber.MaxCourseNumber; i++)
             {
-                Fitip.Add(new Course(new CourseNumber(i)));
+                _fitip.Add(new Course(new CourseNumber(i)));
             }
         }
 
-        public List<Course> Fitip
+        public List<Course> GetFitip()
         {
-            get;
+            return _fitip;
         }
 
         public Group AddGroup(GroupName name)
@@ -31,7 +31,7 @@ namespace Isu.Services
             else
             {
                 var group = new Group(name);
-                Fitip[name.CourseNumber.Number].ListOfGroups.Add(group);
+                _fitip[name.CourseNumber.Number].ListOfGroups.Add(group);
                 return group;
             }
         }
@@ -66,16 +66,16 @@ namespace Isu.Services
 
         public Student GetStudent(int id)
         {
-            return Fitip.SelectMany(t2 => t2.ListOfGroups.SelectMany(t1 => t1.ListOfStudents.Where(tempStudent => tempStudent.StudentId == id))).FirstOrDefault();
+            return _fitip.SelectMany(t2 => t2.ListOfGroups.SelectMany(t1 => t1.ListOfStudents.Where(tempStudent => tempStudent.StudentId == id))).FirstOrDefault();
         }
 
         public Student FindStudent(string name)
         {
-            for (int i = 0; i < Fitip.Count; i++)
+            for (int i = 0; i < _fitip.Count; i++)
             {
-                if (Fitip[i].HasStudent(name))
+                if (_fitip[i].HasStudent(name))
                 {
-                    return Fitip[i].FindStudent(name);
+                    return _fitip[i].FindStudent(name);
                 }
             }
 
@@ -84,9 +84,9 @@ namespace Isu.Services
 
         public bool HasStudent(string name)
         {
-            for (int i = 0; i < Fitip.Count; i++)
+            for (int i = 0; i < _fitip.Count; i++)
             {
-                if (Fitip[i].HasStudent(name))
+                if (_fitip[i].HasStudent(name))
                 {
                     return true;
                 }
@@ -103,7 +103,7 @@ namespace Isu.Services
         public List<Student> FindStudents(CourseNumber courseNumber)
         {
             var listOfstudents = new List<Student>();
-            foreach (Group tempGroup in Fitip[courseNumber.Number].ListOfGroups)
+            foreach (Group tempGroup in _fitip[courseNumber.Number].ListOfGroups)
             {
                 listOfstudents.AddRange(tempGroup.ListOfStudents);
             }
@@ -113,11 +113,12 @@ namespace Isu.Services
 
         public Group FindGroup(GroupName groupName)
         {
-            for (int i = 0; i < Fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
+            for (int i = 0; i < _fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
             {
-                if (Fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
+                if (_fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
                 {
-                    return Fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i];
+                    Group output = _fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i];
+                    return output;
                 }
             }
 
@@ -126,9 +127,9 @@ namespace Isu.Services
 
         public bool HasGroup(GroupName groupName)
         {
-            for (int i = 0; i < Fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
+            for (int i = 0; i < _fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
             {
-                if (Fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
+                if (_fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
                 {
                     return true;
                 }
@@ -139,7 +140,8 @@ namespace Isu.Services
 
         public List<Group> FindGroups(CourseNumber courseNumber)
         {
-            return Fitip[courseNumber.Number].ListOfGroups;
+            List<Group> output = _fitip[courseNumber.Number].ListOfGroups;
+            return output;
         }
 
         public void ChangeStudentGroup(Student student, Group newGroup)
@@ -149,6 +151,10 @@ namespace Isu.Services
                 student.GetStudentGroup().ListOfStudents.Remove(student);
                 newGroup.ListOfStudents.Add(student);
                 student.ChangeGroup(newGroup);
+            }
+            else
+            {
+                throw new IsuException("transfer is not possible");
             }
         }
     }
