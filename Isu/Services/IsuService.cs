@@ -17,11 +17,6 @@ namespace Isu.Services
             }
         }
 
-        public List<Course> GetFitip()
-        {
-            return _fitip;
-        }
-
         public Group AddGroup(GroupName name)
         {
             if (HasGroup(name))
