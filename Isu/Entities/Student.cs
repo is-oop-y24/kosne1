@@ -6,25 +6,25 @@ namespace Isu.Entities
         private Group _studentGroup;
         public Student(string studentName, Group studentGroup)
         {
-            StudentName = studentName;
+            Name = studentName;
             _studentGroup = studentGroup;
             _lastId++;
-            StudentId = _lastId;
+            Id = _lastId;
         }
 
         public Student(string studentName, Group studentGroup, int id)
         {
-            StudentName = studentName;
+            Name = studentName;
             _studentGroup = studentGroup;
-            StudentId = id;
+            Id = id;
         }
 
-        public string StudentName
+        public string Name
         {
             get;
         }
 
-        public int StudentId
+        public int Id
         {
             get;
         }
