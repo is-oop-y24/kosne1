@@ -115,7 +115,10 @@ namespace Isu.Services
             var listOfstudents = new List<Student>();
             foreach (Group tempGroup in _fitip[courseNumber.Number].ListOfGroups)
             {
-                listOfstudents.AddRange(tempGroup.ListOfStudents);
+                foreach (Student tempStudent in tempGroup.ListOfStudents)
+                {
+                    listOfstudents.Add(tempStudent);
+                }
             }
 
             return listOfstudents;
@@ -159,7 +162,7 @@ namespace Isu.Services
             if (newGroup.ListOfStudents.Count < Group.MaxStudents)
             {
                 student.GetStudentGroup().ListOfStudents.Remove(student);
-                var tempStudent = new Student(student.StudentName, newGroup, student.StudentId);
+                var tempStudent = new Student(student.Name, newGroup, student.Id);
                 newGroup.ListOfStudents.Add(tempStudent);
             }
             else
