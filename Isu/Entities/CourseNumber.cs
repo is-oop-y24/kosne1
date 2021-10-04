@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using Isu.Tools;
 
 namespace Isu.Entities
@@ -20,7 +19,6 @@ namespace Isu.Entities
         public int Number
         {
             get;
-            set;
         }
     }
 }
