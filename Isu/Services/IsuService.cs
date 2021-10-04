@@ -130,7 +130,8 @@ namespace Isu.Services
             {
                 if (tempGroup.GroupName == groupName)
                 {
-                    Group output = tempGroup;
+                    var output = new Group(groupName);
+                    output = tempGroup;
                     return output;
                 }
             }
