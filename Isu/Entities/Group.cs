@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Isu.Entities
 {
@@ -24,9 +24,9 @@ namespace Isu.Entities
 
         public bool HasStudent(string studentName)
         {
-            for (int i = 0; i < ListOfStudents.Count; i++)
+            foreach (Student tempStudent in ListOfStudents)
             {
-                if (ListOfStudents[i].StudentName == studentName)
+                if (tempStudent.StudentName == studentName)
                 {
                     return true;
                 }
@@ -37,11 +37,11 @@ namespace Isu.Entities
 
         public Student FindStudent(string studentName)
         {
-            for (int i = 0; i < ListOfStudents.Count; i++)
+            foreach (Student tempStudent in ListOfStudents)
             {
-                if (ListOfStudents[i].StudentName == studentName)
+                if (tempStudent.StudentName == studentName)
                 {
-                    return ListOfStudents[i];
+                    return tempStudent;
                 }
             }
 
