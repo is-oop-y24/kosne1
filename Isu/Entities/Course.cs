@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 
 namespace Isu.Entities
@@ -23,9 +23,9 @@ namespace Isu.Entities
 
         public bool HasStudent(string studentName)
         {
-            for (int i = 0; i < ListOfGroups.Count; i++)
+            foreach (Group tempGroup in ListOfGroups)
             {
-                if (ListOfGroups[i].HasStudent(studentName))
+                if (tempGroup.HasStudent(studentName))
                 {
                     return true;
                 }
@@ -36,11 +36,11 @@ namespace Isu.Entities
 
         public Student FindStudent(string studentName)
         {
-            for (int i = 0; i < ListOfGroups.Count; i++)
+            foreach (Group tempGroup in ListOfGroups)
             {
-                if (ListOfGroups[i].HasStudent(studentName))
+                if (tempGroup.HasStudent(studentName))
                 {
-                    return ListOfGroups[i].FindStudent(studentName);
+                    return tempGroup.FindStudent(studentName);
                 }
             }
 
