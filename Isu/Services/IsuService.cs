@@ -68,7 +68,10 @@ namespace Isu.Services
                 {
                     foreach (Student tempStudent in tempGroup.ListOfStudents)
                     {
-                        return tempStudent;
+                        if (tempStudent.Id == id)
+                        {
+                            return tempStudent;
+                        }
                     }
                 }
             }
