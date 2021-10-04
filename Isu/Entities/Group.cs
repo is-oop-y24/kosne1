@@ -26,7 +26,7 @@ namespace Isu.Entities
         {
             foreach (Student tempStudent in ListOfStudents)
             {
-                if (tempStudent.StudentName == studentName)
+                if (tempStudent.Name == studentName)
                 {
                     return true;
                 }
@@ -39,7 +39,7 @@ namespace Isu.Entities
         {
             foreach (Student tempStudent in ListOfStudents)
             {
-                if (tempStudent.StudentName == studentName)
+                if (tempStudent.Name == studentName)
                 {
                     return tempStudent;
                 }
