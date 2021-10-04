@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Isu.Entities;
@@ -61,16 +62,27 @@ namespace Isu.Services
 
         public Student GetStudent(int id)
         {
-            return _fitip.SelectMany(t2 => t2.ListOfGroups.SelectMany(t1 => t1.ListOfStudents.Where(tempStudent => tempStudent.StudentId == id))).FirstOrDefault();
+            foreach (Course tempCourse in _fitip)
+            {
+                foreach (Group tempGroup in tempCourse.ListOfGroups)
+                {
+                    foreach (Student tempStudent in tempGroup.ListOfStudents)
+                    {
+                        return tempStudent;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public Student FindStudent(string name)
         {
-            for (int i = 0; i < _fitip.Count; i++)
+            foreach (Course tempCourse in _fitip)
             {
-                if (_fitip[i].HasStudent(name))
+                if (tempCourse.HasStudent(name))
                 {
-                    return _fitip[i].FindStudent(name);
+                    return tempCourse.FindStudent(name);
                 }
             }
 
@@ -79,9 +91,9 @@ namespace Isu.Services
 
         public bool HasStudent(string name)
         {
-            for (int i = 0; i < _fitip.Count; i++)
+            foreach (Course tempCourse in _fitip)
             {
-                if (_fitip[i].HasStudent(name))
+                if (tempCourse.HasStudent(name))
                 {
                     return true;
                 }
@@ -108,11 +120,11 @@ namespace Isu.Services
 
         public Group FindGroup(GroupName groupName)
         {
-            for (int i = 0; i < _fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
+            foreach (Group tempGroup in _fitip[groupName.CourseNumber.Number - 1].ListOfGroups)
             {
-                if (_fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
+                if (tempGroup.GroupName == groupName)
                 {
-                    Group output = _fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i];
+                    Group output = tempGroup;
                     return output;
                 }
             }
@@ -122,9 +134,9 @@ namespace Isu.Services
 
         public bool HasGroup(GroupName groupName)
         {
-            for (int i = 0; i < _fitip[groupName.CourseNumber.Number - 1].ListOfGroups.Count; i++)
+            foreach (Group tempGroup in _fitip[groupName.CourseNumber.Number - 1].ListOfGroups)
             {
-                if (_fitip[groupName.CourseNumber.Number - 1].ListOfGroups[i].GroupName == groupName)
+                if (tempGroup.GroupName == groupName)
                 {
                     return true;
                 }
