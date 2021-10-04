@@ -22,11 +22,7 @@ namespace Isu.Tests
         {
             Group group = _isuService.AddGroup(new GroupName("M3207"));
             Student student = _isuService.AddStudent(group, "Ananin Nikolai");
-            if (group.HasStudent("Ananin Nikolai") && student.GetStudentGroup() == group)
-            {
-                Console.WriteLine("OKAY");
-            }
-            else
+            if (!(group.HasStudent("Ananin Nikolai")) || student.GetStudentGroup() != group)
             {
                 Assert.Fail();
             }
@@ -61,11 +57,7 @@ namespace Isu.Tests
             Student student = _isuService.AddStudent(group, "Ananin Nikolai");
             Group newGroup = _isuService.AddGroup(new GroupName("M3202"));
             _isuService.ChangeStudentGroup(student, newGroup);
-            if (!group.HasStudent("Ananin Nikolai") && newGroup.HasStudent("Ananin Nikolai"))
-            {
-                Console.WriteLine("OKAY");
-            }
-            else
+            if (group.HasStudent("Ananin Nikolai") || !newGroup.HasStudent("Ananin Nikolai"))
             {
                 Assert.Fail();
             }
