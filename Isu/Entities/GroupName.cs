@@ -1,4 +1,4 @@
-﻿using Isu.Tools;
+using Isu.Tools;
 
 namespace Isu.Entities
 {
@@ -13,7 +13,7 @@ namespace Isu.Entities
             else
             {
                 CourseNumber = new CourseNumber(groupName[2] - '0');
-                GroupNumber = ((groupName[3] - '0') * 10) + groupName[4];
+                GroupNumber = ((groupName[3] - '0') * 10) + groupName[4] - '0';
             }
         }
 
