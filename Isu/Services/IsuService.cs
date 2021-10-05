@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Isu.Entities;
 using Isu.Tools;
 
@@ -42,12 +40,12 @@ namespace Isu.Services
 
             if (student == null)
             {
-                student = new Student(name, group);
+                student = new Student(name, group.GroupName);
                 group.ListOfStudents.Add(student);
             }
             else
             {
-                if (student.GetStudentGroup() == group)
+                if (student.GroupName == group.GroupName)
                 {
                     throw new IsuException("the student is already in this group.\n");
                 }
@@ -162,9 +160,19 @@ namespace Isu.Services
         {
             if (newGroup.ListOfStudents.Count < Group.MaxStudents)
             {
-                student.GetStudentGroup().ListOfStudents.Remove(student);
-                var tempStudent = new Student(student.Name, newGroup, student.Id);
-                newGroup.ListOfStudents.Add(tempStudent);
+                for (int i = 0; i < _fitip.Count; i++)
+                {
+                    for (int j = 0; j < _fitip[i].ListOfGroups.Count; j++)
+                    {
+                        if (_fitip[i].ListOfGroups[j].GroupName == student.GroupName)
+                        {
+                            _fitip[i].ListOfGroups[j].ListOfStudents.Remove(student);
+                        }
+                    }
+                }
+
+                student.GroupName = newGroup.GroupName;
+                newGroup.ListOfStudents.Add(student);
             }
             else
             {
