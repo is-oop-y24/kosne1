@@ -3,19 +3,18 @@ namespace Isu.Entities
     public class Student
     {
         private static int _lastId = -1;
-        private Group _studentGroup;
-        public Student(string studentName, Group studentGroup)
+        public Student(string studentName, GroupName groupName)
         {
             Name = studentName;
-            _studentGroup = studentGroup;
+            GroupName = groupName;
             _lastId++;
             Id = _lastId;
         }
 
-        public Student(string studentName, Group studentGroup, int id)
+        public Student(string studentName, GroupName groupName, int id)
         {
             Name = studentName;
-            _studentGroup = studentGroup;
+            GroupName = groupName;
             Id = id;
         }
 
@@ -29,9 +28,10 @@ namespace Isu.Entities
             get;
         }
 
-        public Group GetStudentGroup()
+        public GroupName GroupName
         {
-            return _studentGroup;
+            get;
+            set;
         }
     }
 }
