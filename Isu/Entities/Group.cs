@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Isu.Tools;
+using Isu.Tools.SpecificExceptions;
 
 namespace Isu.Entities
 {
@@ -31,7 +31,7 @@ namespace Isu.Entities
             ++_numberOfStudents;
             if (_numberOfStudents > MaximumNumberOfStudents)
             {
-                throw new IsuException("Error: maximum number of students exceeded");
+                throw new GroupException("Error: maximum number of students exceeded");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using Isu.Tools;
+﻿using Isu.Tools.SpecificExceptions;
 
 namespace Isu.Entities
 {
@@ -11,7 +11,7 @@ namespace Isu.Entities
         {
             if (name.Length != 5 || name[0] != 'M' || name[1] != '3' || name[2] < '1' || name[2] > '4')
             {
-                throw new IsuException("Error: wrong group format.\n");
+                throw new GroupException("Error: wrong group format.\n");
             }
             else
             {

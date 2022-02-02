@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Isu.Entities;
-using Isu.Tools;
+using Isu.Tools.SpecificExceptions;
 
 namespace Isu.Services
 {
@@ -17,7 +17,7 @@ namespace Isu.Services
         {
             if (FindGroupBool(name))
             {
-                throw new IsuException("Error: Group already exists");
+                throw new GroupException("Error: Group already exists");
             }
 
             var group = new Group(name);
@@ -30,7 +30,7 @@ namespace Isu.Services
         {
             if (FindStudentBool(name))
             {
-                throw new IsuException("Error: The student is already in the group");
+                throw new StudentException("Error: The student is already in the group");
             }
 
             GroupName groupName = group.GetGroupName();
@@ -56,7 +56,7 @@ namespace Isu.Services
                 }
             }
 
-            throw new IsuException("Error: Student not found");
+            throw new StudentException("Error: Student not found");
         }
 
         public Student FindStudent(string name)
@@ -74,7 +74,7 @@ namespace Isu.Services
                 }
             }
 
-            throw new IsuException("Error: Student not found");
+            throw new StudentException("Error: Student not found");
         }
 
         public List<Student> FindStudents(GroupName groupName)
@@ -88,7 +88,7 @@ namespace Isu.Services
                 }
             }
 
-            throw new IsuException("Error: list of students not found");
+            throw new ListStudentException("Error: list of students not found");
         }
 
         public List<Student> FindStudents(CourseNumber courseNumber)
@@ -114,7 +114,7 @@ namespace Isu.Services
                 }
             }
 
-            throw new IsuException("Error: Group does not exist");
+            throw new GroupException("Error: Group does not exist");
         }
 
         public List<Group> FindGroups(CourseNumber courseNumber)
@@ -177,7 +177,7 @@ namespace Isu.Services
                 }
             }
 
-            throw new IsuException("Error: Group does not exist");
+            throw new GroupException("Error: Group does not exist");
         }
     }
 }
