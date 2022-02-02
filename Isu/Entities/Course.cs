@@ -16,9 +16,10 @@ namespace Isu.Entities
             return new List<Group>(_course.Value);
         }
 
-        public void AddGroup(Group group)
+        public Group AddGroup(Group group)
         {
             _course.Value.Add(group);
+            return group;
         }
 
         public void RemoveStudent(Student student)

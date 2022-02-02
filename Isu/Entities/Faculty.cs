@@ -29,9 +29,10 @@ namespace Isu.Entities
             return new List<Course>(_listOfCourses);
         }
 
-        public void AddGroup(Group group)
+        public Group AddGroup(Group group)
         {
             _groups.Add(group);
+            return group;
         }
 
         public void AddGroupToCourse(Group group)
