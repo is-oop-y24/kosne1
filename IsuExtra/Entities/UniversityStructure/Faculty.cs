@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using IsuExtra.Entities.NamesOfUniversityStructures;
 
 namespace IsuExtra.Entities.UniversityStructure
 {
@@ -11,12 +10,13 @@ namespace IsuExtra.Entities.UniversityStructure
         {
             FacultyName = facultyName;
             _courses = new List<Course>();
-            for (int i = 1; i < 5; i++)
-            {
-                _courses.Add(new Course((CourseNumber)i));
-            }
         }
 
         public char FacultyName { get; }
+
+        public List<Course> Courses()
+        {
+            return new List<Course>(_courses);
+        }
     }
 }

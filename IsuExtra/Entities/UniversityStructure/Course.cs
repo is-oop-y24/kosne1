@@ -14,5 +14,10 @@ namespace IsuExtra.Entities.UniversityStructure
         }
 
         public CourseNumber CourseNumber { get; }
+
+        public List<Group> Groups()
+        {
+            return new List<Group>(_groups);
+        }
     }
 }

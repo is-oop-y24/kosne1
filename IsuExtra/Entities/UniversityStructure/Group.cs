@@ -32,5 +32,10 @@ namespace IsuExtra.Entities.UniversityStructure
         {
             _students.Remove(student);
         }
+
+        public List<Student> Students()
+        {
+            return new List<Student>(_students);
+        }
     }
 }
