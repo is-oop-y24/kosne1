@@ -2,7 +2,7 @@
 
 namespace IsuExtra.Tools.SpecificExceptions
 {
-    public class GroupNameException : Exception
+    public class GroupNameException : IsuExtraException
     {
         public GroupNameException()
         {
