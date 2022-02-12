@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace IsuExtra.Services.Description
+namespace IsuExtra.Services.DescriptionService
 {
     public class DescriptionStrategy : IDescriptionStrategy
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IsuExtra.Services.Description
+namespace IsuExtra.Services.DescriptionService
 {
     public interface IDescriptionStrategy
     {
