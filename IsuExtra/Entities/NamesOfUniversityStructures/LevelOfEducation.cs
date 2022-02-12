@@ -4,5 +4,6 @@
     {
         Bachelor = 3,
         Undergraduates = 4,
+        Specialist = 5,
     }
 }
