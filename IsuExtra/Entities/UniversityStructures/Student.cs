@@ -1,6 +1,7 @@
 ﻿using System;
+using IsuExtra.Entities.NamesOfUniversityStructures;
 
-namespace IsuExtra.Entities
+namespace IsuExtra.Entities.UniversityStructures
 {
     public class Student
     {

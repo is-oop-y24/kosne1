@@ -1,4 +1,4 @@
-﻿namespace IsuExtra.Entities
+﻿namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
     public enum Education : int
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using IsuExtra.Entities.NamesOfUniversityStructures;
 
-namespace IsuExtra.Entities
+namespace IsuExtra.Entities.UniversityStructures
 {
     public class Group
     {

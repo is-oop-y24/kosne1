@@ -1,6 +1,6 @@
 ﻿using IsuExtra.Tools.SpecificExceptions;
 
-namespace IsuExtra.Entities
+namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
     public class GroupName
     {
