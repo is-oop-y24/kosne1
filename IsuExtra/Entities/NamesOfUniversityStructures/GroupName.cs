@@ -15,14 +15,14 @@ namespace IsuExtra.Entities.NamesOfUniversityStructures
             else
             {
                 Faculty = groupName[0];
-                Education = (LevelOfEducation)groupName[1];
+                LevelOfEducation = (LevelOfEducation)groupName[1];
                 CourseNumber = (CourseNumber)groupName[2];
                 GroupNumber = ((groupName[3] - '0') * 10) + groupName[4] - '0';
             }
         }
 
         public char Faculty { get; }
-        public LevelOfEducation Education { get; }
+        public LevelOfEducation LevelOfEducation { get; }
         public CourseNumber CourseNumber { get; }
         public int GroupNumber { get; }
     }
