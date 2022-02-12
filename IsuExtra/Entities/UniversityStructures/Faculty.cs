@@ -12,7 +12,7 @@ namespace IsuExtra.Entities
             _courses = new List<Course>();
             for (int i = 1; i < 5; i++)
             {
-                _courses[i] = new Course((CourseNumber)i);
+                _courses.Add(new Course((CourseNumber)i));
             }
         }
 
