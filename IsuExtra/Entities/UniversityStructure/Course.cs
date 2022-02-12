@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using IsuExtra.Entities.NamesOfUniversityStructures;
 
-namespace IsuExtra.Entities.UniversityStructures
+namespace IsuExtra.Entities.UniversityStructure
 {
     public class Course
     {
