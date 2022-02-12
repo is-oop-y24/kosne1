@@ -1,9 +1,9 @@
-﻿using IsuExtra.Entities.UniversityFacilities;
+﻿using System;
 
 namespace IsuExtra.Services.Description
 {
     public interface IDescriptionStrategy
     {
-        string GetDescription(CampusAddress value);
+        string GetDescription(Enum value);
     }
 }
