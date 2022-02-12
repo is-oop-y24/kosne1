@@ -1,6 +1,6 @@
 ﻿namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
-    public enum Education : int
+    public enum LevelOfEducation : int
     {
         Bachelor = 3,
         Undergraduates = 4,
