@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Shops.Entities.CatalogKeepers;
 using Shops.Entities.Products;
-using Shops.Entities.Transfers;
 using Shops.Services;
 using Shops.Tools;
-using Shops.Tools.SpecificExceptions;
+
 
 namespace Shops.Tests
 {
