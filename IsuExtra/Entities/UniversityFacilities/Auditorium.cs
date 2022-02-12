@@ -1,4 +1,4 @@
-﻿using IsuExtra.Services.Description;
+﻿using IsuExtra.Services.DescriptionService;
 
 namespace IsuExtra.Entities.UniversityFacilities
 {
