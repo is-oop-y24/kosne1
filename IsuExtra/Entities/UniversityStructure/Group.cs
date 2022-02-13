@@ -27,7 +27,7 @@ namespace IsuExtra.Entities.UniversityStructure
             return student;
         }
 
-        public void Remove(Student student)
+        public void RemoveStudent(Student student)
         {
             _students.Remove(student);
         }
