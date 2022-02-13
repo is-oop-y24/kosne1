@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace IsuExtra.Tools.SpecificExceptions
+﻿namespace IsuExtra.Tools.SpecificExceptions
 {
     public class CourseException : IsuExtraException
     {
