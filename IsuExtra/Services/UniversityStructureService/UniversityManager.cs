@@ -104,7 +104,14 @@ namespace IsuExtra.Services.UniversityStructureService
 
         public void ChangeStudentGroup(Student student, Group newGroup)
         {
-            throw new NotImplementedException();
+            if (newGroup.Students().Count == Group.MaximumNumberOfStudents)
+            {
+                throw new GroupException("Error: maximum number of students has been reached");
+            }
+
+            FindGroup(student.GroupName).RemoveStudent(student);
+            newGroup.AddStudent(student.Name);
+            student.GroupName = newGroup.GroupName;
         }
 
         private bool FindGroupBool(GroupName groupName)
