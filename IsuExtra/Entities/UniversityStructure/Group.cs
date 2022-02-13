@@ -8,8 +8,8 @@ namespace IsuExtra.Entities.UniversityStructure
 {
     public class Group
     {
-        private List<Student> _students;
         public const int MaximumNumberOfStudents = 25;
+        private List<Student> _students;
         public Group(GroupName groupName)
         {
             Id = Guid.NewGuid();
