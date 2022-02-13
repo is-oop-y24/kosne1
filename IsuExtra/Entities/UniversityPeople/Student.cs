@@ -9,11 +9,11 @@ namespace IsuExtra.Entities.UniversityPeople
         {
             Id = Guid.NewGuid();
             Name = name;
-            Groupname = groupName;
+            GroupName = groupName;
         }
 
         public Guid Id { get; }
         public string Name { get; }
-        public GroupName Groupname { get; }
+        public GroupName GroupName { get; set; }
     }
 }
