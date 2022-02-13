@@ -9,6 +9,7 @@ namespace IsuExtra.Entities.UniversityStructure
     public class Group
     {
         private List<Student> _students;
+        public const int MaximumNumberOfStudents = 25;
         public Group(GroupName groupName)
         {
             Id = Guid.NewGuid();
@@ -19,9 +20,11 @@ namespace IsuExtra.Entities.UniversityStructure
         public Guid Id { get; }
         public GroupName GroupName { get; }
 
-        public void AddStudent(Student student)
+        public Student AddStudent(string studentName)
         {
+            var student = new Student(studentName, GroupName);
             _students.Add(student);
+            return student;
         }
 
         public void Remove(Student student)
