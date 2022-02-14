@@ -111,6 +111,20 @@ namespace IsuExtra.Services.ScheduleStructureService
                 lesson.Auditorium.Number == auditorium.Number && lesson.Auditorium.Address == auditorium.Address);
         }
 
+        public bool ScheduleIntersect(WeekSchedule weekSchedule1, WeekSchedule weekSchedule2)
+        {
+            foreach (DaySchedule daySchedule1 in weekSchedule1.Days())
+            {
+                DaySchedule daySchedule2 = weekSchedule2.Days()[(int)daySchedule1.DayOfWeek];
+                foreach (Lesson lesson1 in daySchedule1.Lessons())
+                {
+                    return daySchedule2.Lessons().Any(lesson2 => lesson2.LessonBeginning == lesson1.LessonBeginning);
+                }
+            }
+
+            return false;
+        }
+
         private List<Lesson> FindLessons(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning)
         {
             var lessons = _groupSchedules.Select(groupSchedule => FindLesson(dayOfWeek, lessonBeginning, groupSchedule.GroupName)).ToList();

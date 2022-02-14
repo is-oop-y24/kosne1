@@ -2,7 +2,9 @@
 using System.Linq;
 using IsuExtra.Entities.AEUniversityStructure;
 using IsuExtra.Entities.NamesOfUniversityStructures;
+using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityPeople;
+using IsuExtra.Services.ScheduleStructureService;
 using IsuExtra.Services.UniversityStructureService;
 using IsuExtra.Tools.SpecificExceptions;
 
@@ -46,6 +48,14 @@ namespace IsuExtra.Services.AEUniversityService
                                               || aeGroup.Students().Count == AEGroup.MaximumNumberOfStudents)
             {
                 throw new StudentException("Error: can not to add student to this group");
+            }
+
+            IScheduleManager scheduleManager = new ScheduleManager();
+            WeekSchedule groupWeekSchedule = scheduleManager.FindGroupWeekSchedule(student.GroupName);
+            WeekSchedule aeGroupWeekSchedule = scheduleManager.FindGroupWeekSchedule(aeGroup.GroupName);
+            if (scheduleManager.ScheduleIntersect(groupWeekSchedule, aeGroupWeekSchedule))
+            {
+                throw new AEGroupException("Error: AE group schedule intersects with main group schedule");
             }
 
             student.AddAEGroup(aeGroup.GroupName);
