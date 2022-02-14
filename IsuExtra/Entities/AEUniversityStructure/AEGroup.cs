@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.UniversityPeople;
 
@@ -20,6 +21,23 @@ namespace IsuExtra.Entities.AEUniversityStructure
         public List<Student> Students()
         {
             return new List<Student>(_students);
+        }
+
+        public Student FindStudent(string studentName)
+        {
+            return _students.FirstOrDefault(student => student.Name == studentName);
+        }
+
+        public Student AddStudent(Student student)
+        {
+            _students.Add(student);
+            return student;
+        }
+
+        public Student RemoveStudent(Student student)
+        {
+            _students.Remove(student);
+            return student;
         }
     }
 }

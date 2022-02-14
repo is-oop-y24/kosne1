@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace IsuExtra.Entities.AEUniversityStructure
 {
@@ -9,6 +10,19 @@ namespace IsuExtra.Entities.AEUniversityStructure
         public AEUniversity()
         {
             _courses = new List<AECourse>();
+        }
+
+        public AECourse FindCourse(string megaFaculty)
+        {
+            AECourse course = _courses.FirstOrDefault(course => course.MegaFaculty == megaFaculty);
+            return course;
+        }
+
+        public AECourse AddCourse(string megaFaculty)
+        {
+            var course = new AECourse(megaFaculty);
+            _courses.Add(course);
+            return course;
         }
     }
 }
