@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using IsuExtra.Entities.Interface;
+using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
@@ -20,11 +22,6 @@ namespace IsuExtra.Services.ScheduleStructureService
 
         public GroupSchedule AddGroupSchedule(IGroupNames groupName)
         {
-            if (FindGroupSchedule(groupName) != default)
-            {
-                throw new GroupScheduleException("Error: group schedule already exist");
-            }
-
             var groupSchedule = new GroupSchedule(groupName);
             _groupSchedules.Add(groupSchedule);
             return groupSchedule;
@@ -32,20 +29,19 @@ namespace IsuExtra.Services.ScheduleStructureService
 
         public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
         {
-            if (FindDaySchedule(dayOfWeek, groupName) != default)
+            if (HaveDaySchedule(dayOfWeek, groupName))
             {
                 throw new DayScheduleException("Error: day schedule already exist");
             }
 
-            DaySchedule daySchedule = FindGroupWeekSchedule(groupName).AddDaySchedule(dayOfWeek);
-            return daySchedule;
+            return FindGroupWeekSchedule(groupName).AddDaySchedule(dayOfWeek);
         }
 
         public Lesson AddLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
-            if (FindLesson(dayOfWeek, lessonBeginning, groupName) != default)
+            if (HaveLesson(dayOfWeek, lessonBeginning, groupName))
             {
-                throw new LessonException("Error: lesson already exist");
+                throw new LessonException("Error: group already have lesson");
             }
 
             if (HaveLesson(dayOfWeek, lessonBeginning, teacher))
@@ -58,57 +54,45 @@ namespace IsuExtra.Services.ScheduleStructureService
                 throw new LessonException("Error: auditorium already have lesson");
             }
 
-            Lesson lesson = FindDaySchedule(dayOfWeek, groupName)
-                .AddLesson(lessonBeginning, teacher, groupName, auditorium);
-            return lesson;
+            return FindDaySchedule(dayOfWeek, groupName)
+                .AddLesson(dayOfWeek, lessonBeginning, teacher, groupName, auditorium);
         }
 
-        public WeekSchedule FindGroupWeekSchedule(IGroupNames groupName)
+        public bool HaveGroupWeekSchedule(IGroupNames groupName)
         {
-            GroupSchedule groupSchedule = FindGroupSchedule(groupName);
-            if (groupSchedule == default)
-            {
-                throw new GroupScheduleException("Error: group schedule does not exist");
-            }
-
-            return groupSchedule.WeekSchedule;
+            return _groupSchedules.Any(groupSchedule => Equals(groupSchedule.GroupName, groupName));
         }
 
-        public DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
+        public bool HaveDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
         {
-            WeekSchedule weekSchedule = FindGroupWeekSchedule(groupName);
-            if (weekSchedule == default)
+            if (!HaveGroupWeekSchedule(groupName))
             {
                 throw new WeekScheduleException("Error: week schedule does not exist");
             }
 
-            DaySchedule foundDaySchedule = weekSchedule.FindDaySchedule(dayOfWeek);
-            return foundDaySchedule;
+            return FindGroupWeekSchedule(groupName).HaveDaySchedule(dayOfWeek);
         }
 
-        public Lesson FindLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, IGroupNames groupName)
+        public bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, IGroupNames groupName)
         {
-            DaySchedule daySchedule = FindDaySchedule(dayOfWeek, groupName);
-            if (daySchedule == default)
+            if (!HaveDaySchedule(dayOfWeek, groupName))
             {
                 throw new DayScheduleException("Error: day schedule does not exist");
             }
 
-            Lesson foundLesson = daySchedule.FindLesson(lessonBeginning);
-            return foundLesson;
+            return FindDaySchedule(dayOfWeek, groupName).HaveLesson(lessonBeginning);
         }
 
         public bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher)
         {
-            List<Lesson> foundLessons = FindLessons(dayOfWeek, lessonBeginning);
-            return foundLessons.Any(lesson => lesson.Teacher.Id == teacher.Id);
+            return FindLessons(dayOfWeek, lessonBeginning).Any(lesson => Equals(lesson.Teacher.Id, teacher.Id));
         }
 
         public bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Auditorium auditorium)
         {
-            List<Lesson> foundLessons = FindLessons(dayOfWeek, lessonBeginning);
-            return foundLessons.Any(lesson =>
-                lesson.Auditorium.Number == auditorium.Number && lesson.Auditorium.Address == auditorium.Address);
+            return FindLessons(dayOfWeek, lessonBeginning).Any(lesson =>
+                Equals(lesson.Auditorium.Address, auditorium.Address)
+                && Equals(lesson.Auditorium.Number, auditorium.Number));
         }
 
         public bool ScheduleIntersect(WeekSchedule weekSchedule1, WeekSchedule weekSchedule2)
@@ -127,15 +111,18 @@ namespace IsuExtra.Services.ScheduleStructureService
 
         private List<Lesson> FindLessons(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning)
         {
-            var lessons = _groupSchedules.Select(groupSchedule => FindLesson(dayOfWeek, lessonBeginning, groupSchedule.GroupName)).ToList();
-            return lessons;
+            return _groupSchedules.Select(groupSchedule => groupSchedule.WeekSchedule.FindDaySchedule(dayOfWeek).
+                FindLesson(lessonBeginning)).Where(lesson => lesson != default).ToList();
         }
 
-        private GroupSchedule FindGroupSchedule(IGroupNames groupName)
+        private WeekSchedule FindGroupWeekSchedule(IGroupNames groupName)
         {
-            GroupSchedule foundGroupSchedule =
-                _groupSchedules.FirstOrDefault(groupSchedule => Equals(groupSchedule.GroupName, groupName));
-            return foundGroupSchedule;
+            return _groupSchedules.Find(groupSchedule => Equals(groupSchedule.GroupName, groupName))?.WeekSchedule;
+        }
+
+        private DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
+        {
+            return FindGroupWeekSchedule(groupName).FindDaySchedule(dayOfWeek);
         }
     }
 }

@@ -18,16 +18,20 @@ namespace IsuExtra.Entities.ScheduleStructure
             return new List<DaySchedule>(_days);
         }
 
-        public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek)
+        public bool HaveDaySchedule(DayOfWeek dayOfWeek)
         {
-            var daySchedule = new DaySchedule(dayOfWeek);
-            _days.Add(daySchedule);
-            return daySchedule;
+            return _days.Any(daySchedule => Equals(daySchedule.DayOfWeek, dayOfWeek));
         }
 
         public DaySchedule FindDaySchedule(DayOfWeek dayOfWeek)
         {
-            DaySchedule daySchedule = _days.FirstOrDefault(daySchedule => daySchedule.DayOfWeek == dayOfWeek);
+            return _days.Find(daySchedule => Equals(daySchedule.DayOfWeek, dayOfWeek));
+        }
+
+        public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek)
+        {
+            var daySchedule = new DaySchedule(dayOfWeek);
+            _days.Add(daySchedule);
             return daySchedule;
         }
     }

@@ -12,9 +12,9 @@ namespace IsuExtra.Services.ScheduleStructureService
         DaySchedule AddDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName);
         Lesson AddLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium);
 
-        WeekSchedule FindGroupWeekSchedule(IGroupNames groupName);
-        DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName);
-        Lesson FindLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, IGroupNames groupName);
+        bool HaveGroupWeekSchedule(IGroupNames groupName);
+        bool HaveDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName);
+        bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, IGroupNames groupName);
 
         bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher);
         bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Auditorium auditorium);

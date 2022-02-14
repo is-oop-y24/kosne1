@@ -26,9 +26,19 @@ namespace IsuExtra.Entities.ScheduleStructure
             return new List<Lesson>(_lessons);
         }
 
-        public Lesson AddLesson(LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
+        public Lesson FindLesson(LessonBeginning lessonBeginning)
         {
-            var lesson = new Lesson(lessonBeginning, teacher, groupName, auditorium);
+            return _lessons.Find(lesson => Equals(lesson.LessonBeginning, GetDescription(lessonBeginning)));
+        }
+
+        public bool HaveLesson(LessonBeginning lessonBeginning)
+        {
+            return _lessons.Any(lesson => Equals(lesson.LessonBeginning, GetDescription(lessonBeginning)));
+        }
+
+        public Lesson AddLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
+        {
+            var lesson = new Lesson(dayOfWeek, lessonBeginning, teacher, groupName, auditorium);
             _lessons.Add(lesson);
             return lesson;
         }
