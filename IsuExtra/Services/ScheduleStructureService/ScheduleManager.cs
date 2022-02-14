@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IsuExtra.Entities.NamesOfUniversityStructures;
+using IsuExtra.Entities.Interface;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
@@ -18,7 +18,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             _groupSchedules = new List<GroupSchedule>();
         }
 
-        public GroupSchedule AddGroupSchedule(GroupName groupName)
+        public GroupSchedule AddGroupSchedule(IGroupNames groupName)
         {
             if (FindGroupSchedule(groupName) != default)
             {
@@ -30,7 +30,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return groupSchedule;
         }
 
-        public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek, GroupName groupName)
+        public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
         {
             if (FindDaySchedule(dayOfWeek, groupName) != default)
             {
@@ -41,7 +41,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return daySchedule;
         }
 
-        public Lesson AddLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, GroupName groupName, Auditorium auditorium)
+        public Lesson AddLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
             if (FindLesson(dayOfWeek, lessonBeginning, groupName) != default)
             {
@@ -63,7 +63,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return lesson;
         }
 
-        public WeekSchedule FindGroupWeekSchedule(GroupName groupName)
+        public WeekSchedule FindGroupWeekSchedule(IGroupNames groupName)
         {
             GroupSchedule groupSchedule = FindGroupSchedule(groupName);
             if (groupSchedule == default)
@@ -74,7 +74,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return groupSchedule.WeekSchedule;
         }
 
-        public DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, GroupName groupName)
+        public DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, IGroupNames groupName)
         {
             WeekSchedule weekSchedule = FindGroupWeekSchedule(groupName);
             if (weekSchedule == default)
@@ -86,7 +86,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return foundDaySchedule;
         }
 
-        public Lesson FindLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, GroupName groupName)
+        public Lesson FindLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, IGroupNames groupName)
         {
             DaySchedule daySchedule = FindDaySchedule(dayOfWeek, groupName);
             if (daySchedule == default)
@@ -117,7 +117,7 @@ namespace IsuExtra.Services.ScheduleStructureService
             return lessons;
         }
 
-        private GroupSchedule FindGroupSchedule(GroupName groupName)
+        private GroupSchedule FindGroupSchedule(IGroupNames groupName)
         {
             GroupSchedule foundGroupSchedule =
                 _groupSchedules.FirstOrDefault(groupSchedule => groupSchedule.GroupName == groupName);

@@ -1,10 +1,10 @@
 ﻿using System;
-using IsuExtra.Entities.UniversityStructure;
+using IsuExtra.Entities.Interface;
 using IsuExtra.Tools.SpecificExceptions;
 
 namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
-    public class AEGroupName
+    public class AEGroupName : IGroupNames
     {
         public AEGroupName(string groupName)
         {

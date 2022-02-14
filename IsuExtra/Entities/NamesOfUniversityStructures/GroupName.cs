@@ -1,9 +1,10 @@
 ﻿using System;
+using IsuExtra.Entities.Interface;
 using IsuExtra.Tools.SpecificExceptions;
 
 namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
-    public class GroupName
+    public class GroupName : IGroupNames
     {
         public GroupName(string groupName)
         {

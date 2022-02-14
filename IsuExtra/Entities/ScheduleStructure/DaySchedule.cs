@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IsuExtra.Entities.NamesOfUniversityStructures;
+using IsuExtra.Entities.Interface;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
 using IsuExtra.Services.DescriptionService;
@@ -21,7 +21,7 @@ namespace IsuExtra.Entities.ScheduleStructure
         public DayOfWeek DayOfWeek { get; }
         public IDescriptionStrategy DescriptionStrategy { get; set; }
 
-        public Lesson AddLesson(LessonBeginning lessonBeginning, Teacher teacher, GroupName groupName, Auditorium auditorium)
+        public Lesson AddLesson(LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
             var lesson = new Lesson(lessonBeginning, teacher, groupName, auditorium);
             _lessons.Add(lesson);

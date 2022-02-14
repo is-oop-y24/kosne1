@@ -1,4 +1,4 @@
-﻿using IsuExtra.Entities.NamesOfUniversityStructures;
+﻿using IsuExtra.Entities.Interface;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
 using IsuExtra.Services.DescriptionService;
@@ -7,7 +7,7 @@ namespace IsuExtra.Entities.ScheduleStructure
 {
     public class Lesson
     {
-        public Lesson(LessonBeginning lessonBeginning, Teacher teacher, GroupName groupName, Auditorium auditorium)
+        public Lesson(LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
             DescriptionStrategy = new DescriptionStrategy();
             LessonBeginning = DescriptionStrategy.GetDescription(lessonBeginning);
@@ -18,7 +18,7 @@ namespace IsuExtra.Entities.ScheduleStructure
 
         public string LessonBeginning { get; }
         public Teacher Teacher { get; }
-        public GroupName GroupName { get; }
+        public IGroupNames GroupName { get; }
         public Auditorium Auditorium { get; }
         private IDescriptionStrategy DescriptionStrategy { get; set; }
     }
