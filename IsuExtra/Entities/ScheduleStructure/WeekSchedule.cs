@@ -13,6 +13,11 @@ namespace IsuExtra.Entities.ScheduleStructure
             _days = new List<DaySchedule>();
         }
 
+        public List<DaySchedule> Days()
+        {
+            return new List<DaySchedule>(_days);
+        }
+
         public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek)
         {
             var daySchedule = new DaySchedule(dayOfWeek);

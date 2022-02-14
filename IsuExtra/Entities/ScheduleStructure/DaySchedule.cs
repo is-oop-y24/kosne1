@@ -21,6 +21,11 @@ namespace IsuExtra.Entities.ScheduleStructure
         public DayOfWeek DayOfWeek { get; }
         public IDescriptionStrategy DescriptionStrategy { get; set; }
 
+        public List<Lesson> Lessons()
+        {
+            return new List<Lesson>(_lessons);
+        }
+
         public Lesson AddLesson(LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
             var lesson = new Lesson(lessonBeginning, teacher, groupName, auditorium);
