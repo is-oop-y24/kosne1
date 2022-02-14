@@ -7,8 +7,8 @@ namespace IsuExtra.Entities.NamesOfUniversityStructures
     {
         public GroupName(string groupName)
         {
-            if (groupName.Length != 5 || groupName[1] != (int)LevelOfEducation.Bachelor
-                                      || groupName[1] != (int)LevelOfEducation.Undergraduates
+            if (groupName.Length != 5 || groupName[1] < '3'
+                                      || groupName[1] > '5'
                                       || groupName[2] < '1' || groupName[2] > '4')
             {
                 throw new GroupNameException("Error: wrong group format");
