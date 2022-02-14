@@ -48,6 +48,16 @@ namespace IsuExtra.Services.ScheduleStructureService
                 throw new LessonException("Error: lesson already exist");
             }
 
+            if (HaveLesson(dayOfWeek, lessonBeginning, teacher))
+            {
+                throw new LessonException("Error: teacher already have lesson");
+            }
+
+            if (HaveLesson(dayOfWeek, lessonBeginning, auditorium))
+            {
+                throw new LessonException("Error: auditorium already have lesson");
+            }
+
             Lesson lesson = FindDaySchedule(dayOfWeek, groupName)
                 .AddLesson(lessonBeginning, teacher, groupName, auditorium);
             return lesson;
