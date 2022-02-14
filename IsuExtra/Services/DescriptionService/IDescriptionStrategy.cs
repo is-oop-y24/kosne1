@@ -1,4 +1,5 @@
 ﻿using System;
+using IsuExtra.Entities.ScheduleStructure;
 
 namespace IsuExtra.Services.DescriptionService
 {
