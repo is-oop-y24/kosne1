@@ -88,6 +88,25 @@ namespace IsuExtra.Services.ScheduleStructureService
             return foundLesson;
         }
 
+        public bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher)
+        {
+            List<Lesson> foundLessons = FindLessons(dayOfWeek, lessonBeginning);
+            return foundLessons.Any(lesson => lesson.Teacher.Id == teacher.Id);
+        }
+
+        public bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Auditorium auditorium)
+        {
+            List<Lesson> foundLessons = FindLessons(dayOfWeek, lessonBeginning);
+            return foundLessons.Any(lesson =>
+                lesson.Auditorium.Number == auditorium.Number && lesson.Auditorium.Address == auditorium.Address);
+        }
+
+        private List<Lesson> FindLessons(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning)
+        {
+            var lessons = _groupSchedules.Select(groupSchedule => FindLesson(dayOfWeek, lessonBeginning, groupSchedule.GroupName)).ToList();
+            return lessons;
+        }
+
         private GroupSchedule FindGroupSchedule(GroupName groupName)
         {
             GroupSchedule foundGroupSchedule =

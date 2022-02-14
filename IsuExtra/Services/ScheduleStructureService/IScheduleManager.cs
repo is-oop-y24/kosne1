@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
@@ -15,5 +16,8 @@ namespace IsuExtra.Services.ScheduleStructureService
         WeekSchedule FindGroupWeekSchedule(GroupName groupName);
         DaySchedule FindDaySchedule(DayOfWeek dayOfWeek, GroupName groupName);
         Lesson FindLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, GroupName groupName);
+
+        bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher);
+        bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Auditorium auditorium);
     }
 }
