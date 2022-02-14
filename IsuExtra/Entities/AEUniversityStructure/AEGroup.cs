@@ -16,5 +16,10 @@ namespace IsuExtra.Entities.AEUniversityStructure
         }
 
         public AEGroupName GroupName { get; }
+
+        public List<Student> Students()
+        {
+            return new List<Student>(_students);
+        }
     }
 }
