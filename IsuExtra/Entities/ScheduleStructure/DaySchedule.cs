@@ -41,12 +41,5 @@ namespace IsuExtra.Entities.ScheduleStructure
             _lessons.Add(lesson);
             return lesson;
         }
-
-        public Lesson FindLesson(LessonBeginning lessonBeginning)
-        {
-            Lesson foundLesson =
-                _lessons.FirstOrDefault(lesson => lesson.LessonBeginning == DescriptionStrategy.GetDescription(lessonBeginning));
-            return foundLesson;
-        }
     }
 }
