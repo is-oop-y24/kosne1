@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
