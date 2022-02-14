@@ -8,7 +8,7 @@ using IsuExtra.Services.DescriptionService;
 
 namespace IsuExtra.Entities.ScheduleStructure
 {
-    public class DaySchedule
+    public class DaySchedule : DescriptionStrategy
     {
         private List<Lesson> _lessons;
 
@@ -19,7 +19,6 @@ namespace IsuExtra.Entities.ScheduleStructure
         }
 
         public DayOfWeek DayOfWeek { get; }
-        public IDescriptionStrategy DescriptionStrategy { get; set; }
 
         public List<Lesson> Lessons()
         {

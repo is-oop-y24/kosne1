@@ -2,17 +2,15 @@
 
 namespace IsuExtra.Entities.UniversityFacilities
 {
-    public class Auditorium
+    public class Auditorium : DescriptionStrategy
     {
         public Auditorium(int number, CampusAddress campusAddress)
         {
             Number = number;
-            DescriptionStrategy = new DescriptionStrategy();
-            Address = DescriptionStrategy.GetDescription(campusAddress);
+            Address = GetDescription(campusAddress);
         }
 
         public int Number { get; }
         public string Address { get; }
-        private IDescriptionStrategy DescriptionStrategy { get; set; }
     }
 }

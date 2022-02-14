@@ -1,25 +1,26 @@
-﻿using IsuExtra.Entities.Interface;
+﻿using System;
+using IsuExtra.Entities.Interface;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
 using IsuExtra.Services.DescriptionService;
 
 namespace IsuExtra.Entities.ScheduleStructure
 {
-    public class Lesson
+    public class Lesson : DescriptionStrategy
     {
-        public Lesson(LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
+        public Lesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher, IGroupNames groupName, Auditorium auditorium)
         {
-            DescriptionStrategy = new DescriptionStrategy();
-            LessonBeginning = DescriptionStrategy.GetDescription(lessonBeginning);
+            DayOfWeek = dayOfWeek;
+            LessonBeginning = GetDescription(lessonBeginning);
             Teacher = teacher;
             GroupName = groupName;
             Auditorium = auditorium;
         }
 
+        public DayOfWeek DayOfWeek { get; }
         public string LessonBeginning { get; }
         public Teacher Teacher { get; }
         public IGroupNames GroupName { get; }
         public Auditorium Auditorium { get; }
-        private IDescriptionStrategy DescriptionStrategy { get; set; }
     }
 }
