@@ -6,6 +6,7 @@ namespace IsuExtra.Entities.AEUniversityStructure
 {
     public class AEGroup
     {
+        public const int MaximumNumberOfStudents = 25;
         private List<Student> _students;
 
         public AEGroup(AEGroupName groupName)
