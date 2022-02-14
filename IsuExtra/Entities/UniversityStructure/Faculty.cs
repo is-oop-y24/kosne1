@@ -37,12 +37,6 @@ namespace IsuExtra.Entities.UniversityStructure
             return foundCourse;
         }
 
-        public Group AddGroup(GroupName groupName)
-        {
-            Group group = _courses[(int)groupName.CourseNumber].AddGroup(groupName);
-            return group;
-        }
-
         public Group FindGroup(GroupName groupName)
         {
             Group foundGroup = _courses.Select(course => course.FindGroup(groupName)).
