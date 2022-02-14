@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IsuExtra.Entities.ScheduleStructure
 {
@@ -10,10 +11,19 @@ namespace IsuExtra.Entities.ScheduleStructure
         public WeekSchedule()
         {
             _days = new List<DaySchedule>();
-            for (int i = 0; i < 7; i++)
-            {
-                _days.Add(new DaySchedule((DayOfWeek)i));
-            }
+        }
+
+        public DaySchedule AddDaySchedule(DayOfWeek dayOfWeek)
+        {
+            var daySchedule = new DaySchedule(dayOfWeek);
+            _days.Add(daySchedule);
+            return daySchedule;
+        }
+
+        public DaySchedule FindDaySchedule(DayOfWeek dayOfWeek)
+        {
+            DaySchedule daySchedule = _days.FirstOrDefault(daySchedule => daySchedule.DayOfWeek == dayOfWeek);
+            return daySchedule;
         }
     }
 }
