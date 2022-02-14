@@ -134,7 +134,7 @@ namespace IsuExtra.Services.ScheduleStructureService
         private GroupSchedule FindGroupSchedule(IGroupNames groupName)
         {
             GroupSchedule foundGroupSchedule =
-                _groupSchedules.FirstOrDefault(groupSchedule => groupSchedule.GroupName == groupName);
+                _groupSchedules.FirstOrDefault(groupSchedule => Equals(groupSchedule.GroupName, groupName));
             return foundGroupSchedule;
         }
     }
