@@ -6,7 +6,8 @@ using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityPeople;
 using IsuExtra.Services.ScheduleStructureService;
 using IsuExtra.Services.UniversityStructureService;
-using IsuExtra.Tools.SpecificExceptions;
+using IsuExtra.Tools.SpecificExceptions.AEExceptions;
+using IsuExtra.Tools.SpecificExceptions.UniversityPeopleException;
 
 namespace IsuExtra.Services.AEUniversityService
 {

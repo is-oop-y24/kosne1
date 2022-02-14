@@ -1,4 +1,4 @@
-﻿namespace IsuExtra.Tools.SpecificExceptions
+﻿namespace IsuExtra.Tools.SpecificExceptions.ScheduleExceptions
 {
     public class DayScheduleException : IsuExtraException
     {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.UniversityPeople;
 using IsuExtra.Entities.UniversityStructure;
-using IsuExtra.Tools.SpecificExceptions;
+using IsuExtra.Tools.SpecificExceptions.UniversityPeopleException;
+using IsuExtra.Tools.SpecificExceptions.UniversityStructureExceptions;
 
 namespace IsuExtra.Services.UniversityStructureService
 {

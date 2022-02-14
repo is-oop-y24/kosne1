@@ -5,7 +5,7 @@ using IsuExtra.Entities.Interface;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
-using IsuExtra.Tools.SpecificExceptions;
+using IsuExtra.Tools.SpecificExceptions.ScheduleExceptions;
 
 namespace IsuExtra.Services.ScheduleStructureService
 {

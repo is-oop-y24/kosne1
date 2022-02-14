@@ -1,6 +1,6 @@
 ﻿using System;
 using IsuExtra.Entities.Interface;
-using IsuExtra.Tools.SpecificExceptions;
+using IsuExtra.Tools.SpecificExceptions.NameOfUniversityStructuresExceptions;
 
 namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
