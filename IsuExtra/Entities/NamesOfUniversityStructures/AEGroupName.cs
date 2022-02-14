@@ -1,4 +1,6 @@
-﻿using IsuExtra.Tools.SpecificExceptions;
+﻿using System;
+using IsuExtra.Entities.UniversityStructure;
+using IsuExtra.Tools.SpecificExceptions;
 
 namespace IsuExtra.Entities.NamesOfUniversityStructures
 {
@@ -19,5 +21,54 @@ namespace IsuExtra.Entities.NamesOfUniversityStructures
 
         public string MegaFaculty { get; }
         public int Number { get; }
+
+        public static bool operator ==(AEGroupName groupName1, AEGroupName groupName2)
+        {
+            if (groupName1 == null)
+            {
+                throw new AEGroupNameException("Error: null groupName1 value");
+            }
+
+            if (groupName2 == null)
+            {
+                throw new AEGroupNameException("Error: null groupName2 value");
+            }
+
+            return (groupName1.Number == groupName2.Number) &&
+                   (groupName1.MegaFaculty == groupName2.MegaFaculty);
+        }
+
+        public static bool operator !=(AEGroupName groupName1, AEGroupName groupName2)
+        {
+            if (groupName1 == null)
+            {
+                throw new AEGroupNameException("Error: null groupName1 value");
+            }
+
+            if (groupName2 == null)
+            {
+                throw new AEGroupNameException("Error: null groupName2 value");
+            }
+
+            return (groupName1.Number != groupName2.Number) ||
+                   (groupName1.MegaFaculty != groupName2.MegaFaculty);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as AEGroupName);
+        }
+
+        public bool Equals(AEGroupName other)
+        {
+            return other != null &&
+                   MegaFaculty == other.MegaFaculty &&
+                   Number == other.Number;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(MegaFaculty, Number);
+        }
     }
 }
