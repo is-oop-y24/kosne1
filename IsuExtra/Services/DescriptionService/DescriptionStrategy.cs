@@ -2,18 +2,23 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using IsuExtra.Entities.ScheduleStructure;
 
 namespace IsuExtra.Services.DescriptionService
 {
-    public class DescriptionStrategy : IDescriptionStrategy
+    public class DescriptionStrategy
     {
         public string GetDescription(Enum value)
         {
-            MemberInfo member = value.GetType().GetMember(value.ToString()).FirstOrDefault();
-            string description = member?.GetCustomAttribute<DescriptionAttribute>()?.Description;
+            FieldInfo fi = value.GetType().GetField(value.ToString());
 
-            return description ?? string.Empty;
+            DescriptionAttribute[] attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+
+            if (attributes != null && attributes.Any())
+            {
+                return attributes.First().Description;
+            }
+
+            return value.ToString();
         }
     }
 }
