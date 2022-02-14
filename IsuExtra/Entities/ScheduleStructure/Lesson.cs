@@ -20,6 +20,6 @@ namespace IsuExtra.Entities.ScheduleStructure
         public Teacher Teacher { get; }
         public GroupName GroupName { get; }
         public Auditorium Auditorium { get; }
-        public IDescriptionStrategy DescriptionStrategy { private get; set; }
+        private IDescriptionStrategy DescriptionStrategy { get; set; }
     }
 }

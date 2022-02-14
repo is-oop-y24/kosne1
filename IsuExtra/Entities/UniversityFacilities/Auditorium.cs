@@ -13,6 +13,6 @@ namespace IsuExtra.Entities.UniversityFacilities
 
         public int Number { get; }
         public string Address { get; }
-        public IDescriptionStrategy DescriptionStrategy { private get; set; }
+        private IDescriptionStrategy DescriptionStrategy { get; set; }
     }
 }
