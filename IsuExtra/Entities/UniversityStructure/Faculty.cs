@@ -40,7 +40,7 @@ namespace IsuExtra.Entities.UniversityStructure
         public Group FindGroup(GroupName groupName)
         {
             Group foundGroup = _courses.Select(course => course.FindGroup(groupName)).
-                FirstOrDefault(foundGroup => foundGroup.GroupName == groupName);
+                FirstOrDefault(group => group.GroupName == groupName);
             return foundGroup;
         }
 
