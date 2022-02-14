@@ -23,7 +23,7 @@ namespace IsuExtra.Entities.UniversityStructure
         public Faculty AddFaculty(char facultyName)
         {
             var faculty = new Faculty(facultyName);
-
+            _faculties.Add(faculty);
             return faculty;
         }
 
