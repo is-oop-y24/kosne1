@@ -56,6 +56,10 @@ namespace IsuExtra.Entities.NamesOfUniversityStructures
 
         public override bool Equals(object obj)
         {
+            if (obj == null)
+                return false;
+            if (obj.GetType() != GetType())
+                return false;
             return Equals(obj as AEGroupName);
         }
 
