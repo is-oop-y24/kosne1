@@ -10,7 +10,7 @@ namespace IsuExtra.Services.AEUniversityService
         AECourse AddCourse(string megaFaculty, char faculty);
         AEGroup AddGroup(AEGroupName groupName);
 
-        Student AddStudent(AEGroup aeGroup, string studentName);
+        Student AddStudent(AEGroup aeGroup, Student student);
         Student RemoveStudent(AEGroup aeGroup, string studentName);
 
         bool HaveCourse(string megaFaculty);
