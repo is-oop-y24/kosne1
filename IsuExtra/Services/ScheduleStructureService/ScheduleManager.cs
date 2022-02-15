@@ -95,11 +95,25 @@ namespace IsuExtra.Services.ScheduleStructureService
                 && Equals(lesson.Auditorium.Number, auditorium.Number));
         }
 
-        public bool ScheduleIntersect(WeekSchedule weekSchedule1, WeekSchedule weekSchedule2)
+        public bool ScheduleIntersect(IGroupNames groupName1, IGroupNames groupName2)
         {
+            if (!HaveGroupWeekSchedule(groupName1))
+            {
+                throw new WeekScheduleException("Error: group1 week schedule does not exist");
+            }
+
+            if (!HaveGroupWeekSchedule(groupName2))
+            {
+                throw new WeekScheduleException("Error: group2 week schedule does not exist");
+            }
+
+            WeekSchedule weekSchedule1 = FindGroupWeekSchedule(groupName1);
+            WeekSchedule weekSchedule2 = FindGroupWeekSchedule(groupName2);
+
             foreach (DaySchedule daySchedule1 in weekSchedule1.Days())
             {
-                DaySchedule daySchedule2 = weekSchedule2.Days()[(int)daySchedule1.DayOfWeek];
+                if (!weekSchedule2.HaveDaySchedule(daySchedule1.DayOfWeek)) continue;
+                DaySchedule daySchedule2 = weekSchedule2.FindDaySchedule(daySchedule1.DayOfWeek);
                 foreach (Lesson lesson1 in daySchedule1.Lessons())
                 {
                     return daySchedule2.Lessons().Any(lesson2 => lesson2.LessonBeginning == lesson1.LessonBeginning);

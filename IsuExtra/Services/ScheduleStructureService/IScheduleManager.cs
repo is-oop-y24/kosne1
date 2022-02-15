@@ -19,6 +19,6 @@ namespace IsuExtra.Services.ScheduleStructureService
         bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Teacher teacher);
         bool HaveLesson(DayOfWeek dayOfWeek, LessonBeginning lessonBeginning, Auditorium auditorium);
 
-        bool ScheduleIntersect(WeekSchedule weekSchedule1, WeekSchedule weekSchedule2);
+        bool ScheduleIntersect(IGroupNames groupName1, IGroupNames groupName2);
     }
 }
