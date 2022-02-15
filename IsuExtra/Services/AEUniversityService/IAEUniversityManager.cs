@@ -13,8 +13,8 @@ namespace IsuExtra.Services.AEUniversityService
         Student AddStudent(AEGroup aeGroup, string studentName);
         Student RemoveStudent(AEGroup aeGroup, string studentName);
 
-        AECourse FindCourse(string megaFaculty);
-        AEGroup FindGroup(AEGroupName groupName);
+        bool HaveCourse(string megaFaculty);
+        bool HaveGroup(AEGroupName groupName);
 
         List<AEGroup> FindGroups(string megaFaculty);
         List<Student> FindStudents(AEGroupName groupName);
