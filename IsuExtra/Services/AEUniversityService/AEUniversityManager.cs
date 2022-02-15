@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IsuExtra.Entities.AEUniversityStructure;
 using IsuExtra.Entities.NamesOfUniversityStructures;
-using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityPeople;
-using IsuExtra.Services.ScheduleStructureService;
-using IsuExtra.Services.UniversityStructureService;
 using IsuExtra.Tools.SpecificExceptions.AEExceptions;
 using IsuExtra.Tools.SpecificExceptions.UniversityPeopleException;
+using IsuExtra.Tools.SpecificExceptions.UniversityStructureExceptions;
 
 namespace IsuExtra.Services.AEUniversityService
 {
