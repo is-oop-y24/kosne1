@@ -53,17 +53,14 @@ namespace IsuExtra.Services.AEUniversityService
 
         public Student RemoveStudent(AEGroup aeGroup, string studentName)
         {
-            IUniversityManager universityManager = new UniversityManager();
-            Student student = universityManager.FindStudent(studentName);
-
-            if (student.AeGroups().All(name => name != aeGroup.GroupName))
+            Student student = aeGroup.FindStudent(studentName);
+            if (student == default)
             {
-                throw new StudentException("Error: can not to remove student to this group");
+                throw new AEGroupException("Error: student is not in this group");
             }
 
             student.RemoveAEGroup(aeGroup.GroupName);
-            aeGroup.RemoveStudent(student);
-            return student;
+            return aeGroup.RemoveStudent(student);
         }
 
         public bool HaveCourse(string megaFaculty)
