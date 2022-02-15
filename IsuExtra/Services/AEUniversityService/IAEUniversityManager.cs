@@ -7,7 +7,7 @@ namespace IsuExtra.Services.AEUniversityService
 {
     public interface IAEUniversityManager
     {
-        AECourse AddCourse(string megaFaculty);
+        AECourse AddCourse(string megaFaculty, char faculty);
         AEGroup AddGroup(AEGroupName groupName);
 
         Student AddStudent(AEGroup aeGroup, string studentName);

@@ -20,14 +20,9 @@ namespace IsuExtra.Services.AEUniversityService
             _university = new AEUniversity();
         }
 
-        public AECourse AddCourse(string megaFaculty)
+        public AECourse AddCourse(string megaFaculty, char faculty)
         {
-            if (FindCourse(megaFaculty) != default)
-            {
-                throw new AECourseException("Error: course already exist");
-            }
-
-            return _university.AddCourse(megaFaculty);
+            return _university.AddCourse(megaFaculty, faculty);
         }
 
         public AEGroup AddGroup(AEGroupName groupName)
@@ -57,6 +52,11 @@ namespace IsuExtra.Services.AEUniversityService
             if (scheduleManager.ScheduleIntersect(groupWeekSchedule, aeGroupWeekSchedule))
             {
                 throw new AEGroupException("Error: AE group schedule intersects with main group schedule");
+            }
+
+            if (FindCourse(aeGroup.GroupName.MegaFaculty).Faculty == student.GroupName.Faculty)
+            {
+                throw new StudentException("Error: can not add student in this group");
             }
 
             student.AddAEGroup(aeGroup.GroupName);

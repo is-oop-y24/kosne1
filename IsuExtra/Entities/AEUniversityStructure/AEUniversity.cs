@@ -18,9 +18,9 @@ namespace IsuExtra.Entities.AEUniversityStructure
             return course;
         }
 
-        public AECourse AddCourse(string megaFaculty)
+        public AECourse AddCourse(string megaFaculty, char faculty)
         {
-            var course = new AECourse(megaFaculty);
+            var course = new AECourse(megaFaculty, faculty);
             _courses.Add(course);
             return course;
         }

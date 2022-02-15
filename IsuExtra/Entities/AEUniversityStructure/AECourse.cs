@@ -8,13 +8,15 @@ namespace IsuExtra.Entities.AEUniversityStructure
     {
         private List<AEGroup> _groups;
 
-        public AECourse(string megaFaculty)
+        public AECourse(string megaFaculty, char faculty)
         {
+            Faculty = faculty;
             MegaFaculty = megaFaculty;
             _groups = new List<AEGroup>();
         }
 
         public string MegaFaculty { get; }
+        public char Faculty { get; }
 
         public List<AEGroup> Groups()
         {
