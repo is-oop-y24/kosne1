@@ -60,7 +60,9 @@ namespace IsuExtra.Entities.NamesOfUniversityStructures
                 return false;
             if (obj.GetType() != GetType())
                 return false;
-            return Equals(obj as AEGroupName);
+
+            var other = (AEGroupName)obj;
+            return other.ToString() == ToString();
         }
 
         public bool Equals(AEGroupName other)
