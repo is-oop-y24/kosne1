@@ -31,11 +31,6 @@ namespace IsuExtra.Services.UniversityStructureService
 
         public Group AddGroup(GroupName groupName)
         {
-            if (FindGroupBool(groupName))
-            {
-                throw new GroupException("Error: group already exist");
-            }
-
             if (_university.FindFaculty(groupName.Faculty) == default)
             {
                 throw new FacultyException("Error: faculty does not exist");
@@ -45,6 +40,11 @@ namespace IsuExtra.Services.UniversityStructureService
             if (course == default)
             {
                 throw new CourseException("Error: course does not exist");
+            }
+
+            if (course.FindGroup(groupName) != default)
+            {
+                throw new GroupException("Error: group already exist");
             }
 
             Group group = course.AddGroup(groupName);
