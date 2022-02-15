@@ -39,5 +39,10 @@ namespace IsuExtra.Entities.AEUniversityStructure
             _students.Remove(student);
             return student;
         }
+
+        public List<Student> FindUnregisteredStudents(GroupName groupName)
+        {
+            return _students.Where(student => Equals(student.GroupName, groupName) && student.AeGroups().Count == 0).ToList();
+        }
     }
 }
