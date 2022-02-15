@@ -26,7 +26,7 @@ namespace IsuExtra.Services.AEUniversityService
 
         public AEGroup AddGroup(AEGroupName groupName)
         {
-            if (FindGroup(groupName) != default)
+            if (HaveGroup(groupName))
             {
                 throw new AEGroupException("Error: group already exist");
             }
@@ -34,23 +34,11 @@ namespace IsuExtra.Services.AEUniversityService
             return FindCourse(groupName.MegaFaculty).AddGroup(groupName);
         }
 
-        public Student AddStudent(AEGroup aeGroup, string studentName)
+        public Student AddStudent(AEGroup aeGroup, Student student)
         {
-            IUniversityManager universityManager = new UniversityManager();
-            Student student = universityManager.FindStudent(studentName);
-
-            if (student.AeGroups().Count == 2 || student.AeGroups().Any(name => name == aeGroup.GroupName)
-                                              || aeGroup.Students().Count == AEGroup.MaximumNumberOfStudents)
+            if (aeGroup.Students().Count == AEGroup.MaximumNumberOfStudents)
             {
-                throw new StudentException("Error: can not to add student to this group");
-            }
-
-            IScheduleManager scheduleManager = new ScheduleManager();
-            WeekSchedule groupWeekSchedule = scheduleManager.FindGroupWeekSchedule(student.GroupName);
-            WeekSchedule aeGroupWeekSchedule = scheduleManager.FindGroupWeekSchedule(aeGroup.GroupName);
-            if (scheduleManager.ScheduleIntersect(groupWeekSchedule, aeGroupWeekSchedule))
-            {
-                throw new AEGroupException("Error: AE group schedule intersects with main group schedule");
+                throw new AEGroupException("Error: the maximum number of students has been reached in the AE group");
             }
 
             if (FindCourse(aeGroup.GroupName.MegaFaculty).Faculty == student.GroupName.Faculty)
@@ -78,36 +66,68 @@ namespace IsuExtra.Services.AEUniversityService
             return student;
         }
 
-        public AECourse FindCourse(string megaFaculty)
+        public bool HaveCourse(string megaFaculty)
         {
-            return _university.FindCourse(megaFaculty);
+            return _university.HaveCourse(megaFaculty);
         }
 
-        public AEGroup FindGroup(AEGroupName groupName)
+        public bool HaveGroup(AEGroupName groupName)
         {
-            return FindCourse(groupName.MegaFaculty).FindGroup(groupName);
+            if (!HaveCourse(groupName.MegaFaculty))
+            {
+                throw new AECourseException("Error: AE course does not exist");
+            }
+
+            return FindCourse(groupName.MegaFaculty).HaveGroup(groupName);
         }
 
         public List<AEGroup> FindGroups(string megaFaculty)
         {
-            return _university.FindCourse(megaFaculty).Groups();
+            return _university.Courses().Where(course => course.MegaFaculty == megaFaculty)
+                .SelectMany(course => course.Groups()).ToList();
         }
 
         public List<Student> FindStudents(AEGroupName groupName)
         {
-            List<Student> foundStudents = FindGroup(groupName).Students();
-            if (foundStudents == default)
+            if (!HaveGroup(groupName))
             {
                 throw new AEGroupException("Error: group not found");
             }
 
-            return foundStudents;
+            return FindGroup(groupName).Students();
         }
 
         public List<Student> FindUnregisteredStudents(GroupName groupName)
         {
-            IUniversityManager universityManager = new UniversityManager();
-            return universityManager.FindStudents(groupName).FindAll(student => student.AeGroups().Count == 0);
+            List<Student> students = _university.FindUnregisteredStudents(groupName);
+
+            if (students == default)
+            {
+                throw new ListStudentException("Error: students not found");
+            }
+
+            return students;
+        }
+
+        private AECourse FindCourse(string megaFaculty)
+        {
+            return _university.FindCourse(megaFaculty);
+        }
+
+        private AEGroup FindGroup(AEGroupName groupName)
+        {
+            return FindCourse(groupName.MegaFaculty).FindGroup(groupName);
+        }
+
+        private Student FindStudent(string studentName)
+        {
+            Student foundStudent = _university.FindStudent(studentName);
+            if (foundStudent == default)
+            {
+                throw new AEGroupException("Error: student not found");
+            }
+
+            return foundStudent.Name != studentName ? null : foundStudent;
         }
     }
 }
