@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using IsuExtra.Entities.Interface;
-using IsuExtra.Entities.NamesOfUniversityStructures;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
