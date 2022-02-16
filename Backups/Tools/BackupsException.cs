@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Backups.Entities.Tools
+namespace Backups.Tools
 {
     public class BackupsException : Exception
     {
