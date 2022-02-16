@@ -30,7 +30,7 @@ namespace Backups.Entities.JobStructure
             return jobObject;
         }
 
-        public void Backup(List<JobObject> jobObjects)
+        public RestorePoint Backup(List<JobObject> jobObjects)
         {
             List<Storage> storages = StorageStrategy.JobObjectsToStorages(jobObjects);
 
@@ -38,6 +38,7 @@ namespace Backups.Entities.JobStructure
 
             this.restorePoints.Add(restorePoint);
             repository.AddRestorePoint(restorePoint);
+            return restorePoint;
         }
     }
 }
