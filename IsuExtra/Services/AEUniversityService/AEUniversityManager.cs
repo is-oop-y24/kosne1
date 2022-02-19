@@ -46,6 +46,11 @@ namespace IsuExtra.Services.AEUniversityService
                 throw new StudentException("Error: can not add student in this group");
             }
 
+            if (student.AeGroups().Count == 2)
+            {
+                throw new StudentException("Error: student is already in 2 groups");
+            }
+
             student.AddAEGroup(aeGroup.GroupName);
             aeGroup.AddStudent(student);
             return student;
