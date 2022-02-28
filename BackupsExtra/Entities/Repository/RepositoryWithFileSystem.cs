@@ -11,7 +11,7 @@ namespace BackupsExtra.Entities.Repository
             Path = path;
         }
 
-        public string Path { get; }
+        public string Path { get; set; }
 
         public void AddRestorePoint(RestorePoint restorePoint)
         {
