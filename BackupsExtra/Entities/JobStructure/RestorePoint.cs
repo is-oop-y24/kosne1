@@ -30,6 +30,13 @@ namespace BackupsExtra.Entities.JobStructure
             return new List<Storage>(storages);
         }
 
+        public string GetInformation()
+        {
+            string information = storages.
+                Aggregate(string.Empty, (current, storage) => current + ("Storage: " + storage.GetInformation() + ", "));
+            return information.TrimEnd(new[] { ',', ' ' });
+        }
+
         public class Snapshot
         {
             public Snapshot()

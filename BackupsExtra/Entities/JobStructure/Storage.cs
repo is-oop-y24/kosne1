@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BackupsExtra.Services.LoggerStrategyService;
 
 namespace BackupsExtra.Entities.JobStructure
 {
@@ -15,6 +16,13 @@ namespace BackupsExtra.Entities.JobStructure
         public List<JobObject> GetJobObjects()
         {
             return new List<JobObject>(jobObjects);
+        }
+
+        public string GetInformation()
+        {
+            string information = jobObjects.
+                Aggregate(string.Empty, (current, jobObject) => current + (jobObject.GetInformation() + ", "));
+            return information.TrimEnd(new[] { ',', ' ' });
         }
 
         public class Snapshot
