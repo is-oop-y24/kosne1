@@ -13,6 +13,8 @@ namespace BackupsExtra.Entities.JobStructure
             this.jobObjects = jobObjects;
         }
 
+        public ILogger Logger { get; set; }
+
         public List<JobObject> GetJobObjects()
         {
             return new List<JobObject>(jobObjects);

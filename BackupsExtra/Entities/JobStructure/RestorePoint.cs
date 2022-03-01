@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BackupsExtra.Services.LoggerStrategyService;
 
 namespace BackupsExtra.Entities.JobStructure
 {
@@ -22,6 +23,7 @@ namespace BackupsExtra.Entities.JobStructure
             Id = id;
         }
 
+        public ILogger Logger { get; set; }
         public int Number { get; }
         public Guid Id { get; }
 

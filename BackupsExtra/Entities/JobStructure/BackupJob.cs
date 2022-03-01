@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BackupsExtra.Entities.Repository;
+using BackupsExtra.Services.LoggerStrategyService;
 using BackupsExtra.Services.StorageStrategyService;
 
 namespace BackupsExtra.Entities.JobStructure
@@ -26,6 +27,7 @@ namespace BackupsExtra.Entities.JobStructure
         }
 
         public IStorageStrategy StorageStrategy { get; set; }
+        public ILogger Logger { get; set; }
 
         public void SetRepository(IRepository repository)
         {
