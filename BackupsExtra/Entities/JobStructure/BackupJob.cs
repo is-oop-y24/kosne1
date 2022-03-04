@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BackupsExtra.Entities.Repository;
 using BackupsExtra.Services.LoggerStrategyService;
@@ -76,6 +77,11 @@ namespace BackupsExtra.Entities.JobStructure
         {
             return GetInformationAboutJobObjects() + "; " + GetInformationAboutRestorePoints() + "; " +
                    GetInformationAboutRepository();
+        }
+
+        private bool FindJobObject(Guid id)
+        {
+            return jobObjects.Any(jobObject => Equals(jobObject.Id, id));
         }
 
         public class Snapshot
