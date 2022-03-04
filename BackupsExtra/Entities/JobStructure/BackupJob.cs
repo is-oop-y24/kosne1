@@ -51,6 +51,33 @@ namespace BackupsExtra.Entities.JobStructure
             return restorePoint;
         }
 
+        public string GetInformationAboutJobObjects()
+        {
+            string information = "Job objects: { " + jobObjects.Aggregate(
+                string.Empty,
+                (current, jobObject) => current + (jobObject.GetInformation() + ", "));
+            return information.TrimEnd(',', ' ') + " }";
+        }
+
+        public string GetInformationAboutRestorePoints()
+        {
+            string information = "Restore points: { " + restorePoints.Aggregate(
+                string.Empty,
+                (current, restorePoint) => current + (restorePoint.GetInformation() + ", "));
+            return information.TrimEnd(',', ' ') + " }";
+        }
+
+        public string GetInformationAboutRepository()
+        {
+            return "Repository: { " + repository.Path + " }";
+        }
+
+        public string GetInformationAboutBackupJob()
+        {
+            return GetInformationAboutJobObjects() + "; " + GetInformationAboutRestorePoints() + "; " +
+                   GetInformationAboutRepository();
+        }
+
         public class Snapshot
         {
             public Snapshot()
