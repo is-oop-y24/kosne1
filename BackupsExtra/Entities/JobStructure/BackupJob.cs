@@ -35,20 +35,41 @@ namespace BackupsExtra.Entities.JobStructure
             this.repository = repository;
         }
 
-        public JobObject AddJobObject(JobObject jobObject)
+        public BackupJob AddJobObject(JobObject jobObject)
         {
+            Logger.InformationLogging("Adding an " + jobObject.GetInformation() + " to " +
+                                      GetInformationAboutBackupJob() + "\r\n");
+            if (FindJobObject(jobObject.Id))
+            {
+                Logger.WarningLogging("This backup job: " + GetInformationAboutBackupJob() +
+                                      " already have this job object " + jobObject.GetInformation() + "\r\n");
+            }
+
             jobObjects.Add(jobObject);
-            return jobObject;
+            Logger.InformationLogging("Job object added to " + GetInformationAboutBackupJob() + "\r\n");
+            return this;
         }
 
         public RestorePoint Backup(List<JobObject> jobObjects)
         {
+            if (jobObjects.Count == 0)
+            {
+                Logger.WarningLogging("List of job objects is empty" + "\r\n");
+            }
+
+            string information = "Job objects: { " + jobObjects.Aggregate(
+                string.Empty,
+                (current, jobObject) => current + (jobObject.GetInformation() + ", ")) + " }";
+            Logger.InformationLogging("Backup process with " + information + " in " + GetInformationAboutBackupJob() + "\r\n");
+
             List<Storage> storages = StorageStrategy.JobObjectsToStorages(jobObjects);
 
             var restorePoint = new RestorePoint(storages, restorePoints.Count + 1);
+            Logger.InformationLogging("Created " + restorePoint.GetInformation() + "\r\n");
 
-            this.restorePoints.Add(restorePoint);
+            restorePoints.Add(restorePoint);
             repository.AddRestorePoint(restorePoint);
+            Logger.InformationLogging("Backup process finished, " + GetInformationAboutBackupJob() + "\r\n");
             return restorePoint;
         }
 
@@ -85,8 +106,8 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformationAboutBackupJob()
         {
-            return GetInformationAboutJobObjects() + "; " + GetInformationAboutRestorePoints() + "; " +
-                   GetInformationAboutRepository();
+            return "Backup job: { " + GetInformationAboutJobObjects() + "; " + GetInformationAboutRestorePoints() + "; " +
+                   GetInformationAboutRepository() + " }";
         }
 
         private bool FindJobObject(Guid id)
