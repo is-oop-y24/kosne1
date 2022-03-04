@@ -54,6 +54,11 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformationAboutJobObjects()
         {
+            if (jobObjects.Count == 0)
+            {
+                return "Backup job contains 0 job objects";
+            }
+
             string information = "Job objects: { " + jobObjects.Aggregate(
                 string.Empty,
                 (current, jobObject) => current + (jobObject.GetInformation() + ", "));
@@ -62,6 +67,11 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformationAboutRestorePoints()
         {
+            if (restorePoints.Count == 0)
+            {
+                return "Backup job contains 0 restore points";
+            }
+
             string information = "Restore points: { " + restorePoints.Aggregate(
                 string.Empty,
                 (current, restorePoint) => current + (restorePoint.GetInformation() + ", "));
