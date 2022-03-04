@@ -22,9 +22,9 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformation()
         {
-            string information = jobObjects.
+            string information = "Storage: { " + jobObjects.
                 Aggregate(string.Empty, (current, jobObject) => current + (jobObject.GetInformation() + ", "));
-            return information.TrimEnd(new[] { ',', ' ' });
+            return information.TrimEnd(',', ' ') + " }";
         }
 
         public class Snapshot

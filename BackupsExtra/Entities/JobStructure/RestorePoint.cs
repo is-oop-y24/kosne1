@@ -34,9 +34,9 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformation()
         {
-            string information = storages.
-                Aggregate(string.Empty, (current, storage) => current + ("Storage: " + storage.GetInformation() + ", "));
-            return information.TrimEnd(new[] { ',', ' ' });
+            string information = "Restore point: { " + storages.
+                Aggregate(string.Empty, (current, storage) => current + (storage.GetInformation() + ", "));
+            return information.TrimEnd(',', ' ') + " }";
         }
 
         public class Snapshot

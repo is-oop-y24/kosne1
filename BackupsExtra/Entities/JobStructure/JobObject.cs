@@ -21,7 +21,7 @@ namespace BackupsExtra.Entities.JobStructure
 
         public string GetInformation()
         {
-            return "Id: " + Id.ToString() + ", Path to file:" + Path;
+            return "Job object: { Id: " + Id.ToString() + ", Path to file:" + Path + " }";
         }
 
         public class Snapshot
