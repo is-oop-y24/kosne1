@@ -17,12 +17,12 @@ namespace BackupsExtra.Entities.JobStructure
             DateTime = DateTime.Now;
         }
 
-        private RestorePoint(List<Storage> storages, int number, Guid id)
+        private RestorePoint(List<Storage> storages, int number, Guid id, DateTime dateTime)
         {
             this.storages = storages;
             Number = number;
             Id = id;
-            DateTime = DateTime.Now;
+            DateTime = dateTime;
         }
 
         public ILogger Logger { get; set; }
@@ -53,15 +53,17 @@ namespace BackupsExtra.Entities.JobStructure
                 StoragesSnapshots = restorePoint.storages.Select(storage => new Storage.Snapshot(storage)).ToList();
                 NumberSnapshot = restorePoint.Number;
                 IdSnapshot = restorePoint.Id;
+                DateTime = restorePoint.DateTime;
             }
 
             public List<Storage.Snapshot> StoragesSnapshots { get; set; }
             public int NumberSnapshot { get; set; }
             public Guid IdSnapshot { get; set; }
+            public DateTime DateTime { get; set; }
 
             public RestorePoint Restore()
             {
-                return new RestorePoint(StoragesSnapshots.Select(storage => storage.Restore()).ToList(), NumberSnapshot, IdSnapshot);
+                return new RestorePoint(StoragesSnapshots.Select(storage => storage.Restore()).ToList(), NumberSnapshot, IdSnapshot, DateTime);
             }
         }
     }
