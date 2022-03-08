@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using BackupsExtra.Entities.Repository;
 using BackupsExtra.Services.LoggerStrategyService;
+using BackupsExtra.Services.PointClearingStrategyService;
 using BackupsExtra.Services.StorageStrategyService;
+using BackupsExtra.Tools.SpecificExceptions;
 
 namespace BackupsExtra.Entities.JobStructure
 {
@@ -32,6 +34,7 @@ namespace BackupsExtra.Entities.JobStructure
 
         public IStorageStrategy StorageStrategy { get; set; }
         public ILogger Logger { get; set; }
+        public IClearingPointsStrategy ClearingRestorePoints { get; set; }
 
         public void SetRepository(IRepository repository)
         {
@@ -75,6 +78,23 @@ namespace BackupsExtra.Entities.JobStructure
             repository.AddRestorePoint(restorePoint);
             Logger.InformationLogging("Backup process finished, " + GetInformationAboutBackupJob() + "\r\n");
             return restorePoint;
+        }
+
+        public void ClearRestorePoints()
+        {
+            Logger.InformationLogging("Starting process of clean restore points in " + GetInformationAboutBackupJob() + "\r\n");
+            List<RestorePoint> restorePoints = ClearingRestorePoints.ClearRestorePoints(new List<RestorePoint>(this.restorePoints));
+            if (restorePoints.Count == 0)
+            {
+                Logger.ErrorLogging("It is not possible to delete all points" + "\r\n");
+                throw new RestorePointException("Error: all restore points deleted");
+            }
+
+            var restorePointsNumbers = new List<int>(this.restorePoints.Select(restorePoint => restorePoint.Number)
+                .Except(restorePoints.Select(restorePoint => restorePoint.Number)));
+            repository.ClearRestorePoints(restorePointsNumbers);
+            this.restorePoints = restorePoints;
+            Logger.InformationLogging("Restore points cleared, " + GetInformationAboutBackupJob() + "\r\n");
         }
 
         public string GetInformationAboutJobObjects()
