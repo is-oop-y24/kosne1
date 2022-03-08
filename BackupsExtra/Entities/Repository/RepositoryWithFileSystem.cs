@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 using BackupsExtra.Entities.JobStructure;
 
@@ -34,6 +35,14 @@ namespace BackupsExtra.Entities.Repository
 
                 ZipFile.CreateFromDirectory(pathToArchiveStorage, pathToRestorePoint + @"\Storage" + i + ".zip");
                 Directory.Delete(pathToArchiveStorage, true);
+            }
+        }
+
+        public void ClearRestorePoints(List<int> restorePointsNumbers)
+        {
+            foreach (int restorePointNumber in restorePointsNumbers)
+            {
+                Directory.Delete(Path + @"\RestorePoint" + restorePointNumber, true);
             }
         }
     }

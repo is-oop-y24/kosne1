@@ -1,4 +1,5 @@
-﻿using BackupsExtra.Entities.JobStructure;
+﻿using System.Collections.Generic;
+using BackupsExtra.Entities.JobStructure;
 
 namespace BackupsExtra.Entities.Repository
 {
@@ -6,5 +7,6 @@ namespace BackupsExtra.Entities.Repository
     {
         public string Path { get; set; }
         void AddRestorePoint(RestorePoint restorePoint);
+        void ClearRestorePoints(List<int> restorePointsNumbers);
     }
 }
