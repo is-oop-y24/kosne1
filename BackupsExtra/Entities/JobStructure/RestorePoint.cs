@@ -14,6 +14,7 @@ namespace BackupsExtra.Entities.JobStructure
             this.storages = storages;
             Number = number;
             Id = Guid.NewGuid();
+            DateTime = DateTime.Now;
         }
 
         private RestorePoint(List<Storage> storages, int number, Guid id)
@@ -21,11 +22,13 @@ namespace BackupsExtra.Entities.JobStructure
             this.storages = storages;
             Number = number;
             Id = id;
+            DateTime = DateTime.Now;
         }
 
         public ILogger Logger { get; set; }
         public int Number { get; }
         public Guid Id { get; }
+        public DateTime DateTime { get; }
 
         public List<Storage> GetStorages()
         {
