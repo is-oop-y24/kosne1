@@ -97,7 +97,7 @@ namespace BackupsExtra.Entities.JobStructure
             Logger.InformationLogging("Restore points cleared, " + GetInformationAboutBackupJob() + "\r\n");
         }
 
-        public string GetInformationAboutJobObjects()
+        private string GetInformationAboutJobObjects()
         {
             if (jobObjects.Count == 0)
             {
@@ -110,7 +110,7 @@ namespace BackupsExtra.Entities.JobStructure
             return information.TrimEnd(',', ' ') + " }";
         }
 
-        public string GetInformationAboutRestorePoints()
+        private string GetInformationAboutRestorePoints()
         {
             if (restorePoints.Count == 0)
             {
@@ -123,12 +123,12 @@ namespace BackupsExtra.Entities.JobStructure
             return information.TrimEnd(',', ' ') + " }";
         }
 
-        public string GetInformationAboutRepository()
+        private string GetInformationAboutRepository()
         {
             return "Repository: { " + repository.Path + " }";
         }
 
-        public string GetInformationAboutBackupJob()
+        private string GetInformationAboutBackupJob()
         {
             return "Backup job: { " + GetInformationAboutJobObjects() + "; " + GetInformationAboutRestorePoints() + "; " +
                    GetInformationAboutRepository() + " }";
