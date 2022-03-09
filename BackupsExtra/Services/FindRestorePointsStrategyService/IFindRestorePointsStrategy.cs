@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using BackupsExtra.Entities.JobStructure;
 
-namespace BackupsExtra.Services.PointClearingStrategyService
+namespace BackupsExtra.Services.FindRestorePointsStrategyService
 {
-    public interface IClearingPointsStrategy
+    public interface IFindRestorePointsStrategy
     {
         public DateTime DateTime { get; set; }
         public int MaxNumberOfRestorePoints { get; set; }
