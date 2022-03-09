@@ -38,7 +38,7 @@ namespace BackupsExtra.Entities.Repository
             }
         }
 
-        public void ClearRestorePoints(List<int> restorePointsNumbers)
+        public void DeleteRestorePoints(List<int> restorePointsNumbers)
         {
             foreach (int restorePointNumber in restorePointsNumbers)
             {

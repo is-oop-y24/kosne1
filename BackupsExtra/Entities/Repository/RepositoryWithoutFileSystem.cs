@@ -11,7 +11,7 @@ namespace BackupsExtra.Entities.Repository
         {
         }
 
-        public void ClearRestorePoints(List<int> restorePointsNumbers)
+        public void DeleteRestorePoints(List<int> restorePointsNumbers)
         {
         }
     }

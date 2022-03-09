@@ -7,6 +7,6 @@ namespace BackupsExtra.Entities.Repository
     {
         public string Path { get; set; }
         void AddRestorePoint(RestorePoint restorePoint);
-        void ClearRestorePoints(List<int> restorePointsNumbers);
+        void DeleteRestorePoints(List<int> restorePointsNumbers);
     }
 }
