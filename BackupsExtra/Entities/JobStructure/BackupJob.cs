@@ -43,6 +43,11 @@ namespace BackupsExtra.Entities.JobStructure
             this.repository = repository;
         }
 
+        public List<RestorePoint> GetRestorePoints()
+        {
+            return new List<RestorePoint>(restorePoints);
+        }
+
         public BackupJob AddJobObject(JobObject jobObject)
         {
             Logger.InformationLogging("Adding an " + jobObject.GetInformation() + " to " +
