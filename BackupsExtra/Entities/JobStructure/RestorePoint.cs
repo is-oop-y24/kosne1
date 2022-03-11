@@ -27,9 +27,9 @@ namespace BackupsExtra.Entities.JobStructure
         }
 
         public ILogger Logger { get; set; }
-        public int Number { get; }
-        public Guid Id { get; }
-        public DateTime DateTime { get; }
+        public int Number { get; private set; }
+        public Guid Id { get; private set; }
+        public DateTime DateTime { get; set; }
 
         public List<Storage> GetStorages()
         {
