@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BackupsExtra.Entities.JobStructure;
 
 namespace BackupsExtra.Services.FindRestorePointsStrategyService
@@ -11,7 +10,16 @@ namespace BackupsExtra.Services.FindRestorePointsStrategyService
         public int MaxNumberOfRestorePoints { get; set; }
         public List<RestorePoint> ClearRestorePoints(List<RestorePoint> restorePoints)
         {
-            return restorePoints.Where(restorePoint => restorePoint.DateTime.CompareTo(DateTime) > 0 || restorePoints.Count <= MaxNumberOfRestorePoints).ToList();
+            var foundRestorePoints = new List<RestorePoint>();
+            foreach (RestorePoint restorePoint in restorePoints)
+            {
+                if (restorePoint.DateTime.CompareTo(DateTime) > 0 && foundRestorePoints.Count < MaxNumberOfRestorePoints)
+                {
+                    foundRestorePoints.Add(restorePoint);
+                }
+            }
+
+            return foundRestorePoints;
         }
     }
 }
