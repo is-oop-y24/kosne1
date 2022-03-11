@@ -25,12 +25,24 @@ namespace BackupsExtra.Entities.JobStructure
             restorePoints = new List<RestorePoint>();
         }
 
-        private BackupJob(List<JobObject> jobObjects, List<RestorePoint> restorePoints, IRepository repository, int indexOfLastRestorePoint)
+        private BackupJob(
+            List<JobObject> jobObjects,
+            List<RestorePoint> restorePoints,
+            IRepository repository,
+            int indexOfLastRestorePoint,
+            IStorageStrategy storageStrategy,
+            ILogger logger,
+            IFindRestorePointsStrategy findRestorePoints,
+            IClearRestorePointsStrategy clearingRestorePoints)
         {
             this.jobObjects = jobObjects;
             this.restorePoints = restorePoints;
             this.repository = repository;
             this.indexOfLastRestorePoint = indexOfLastRestorePoint;
+            StorageStrategy = storageStrategy;
+            Logger = logger;
+            FindRestorePoints = findRestorePoints;
+            ClearingRestorePoints = clearingRestorePoints;
         }
 
         public IStorageStrategy StorageStrategy { get; set; }
@@ -166,19 +178,28 @@ namespace BackupsExtra.Entities.JobStructure
                     .Select(restorePoint => new RestorePoint.Snapshot(restorePoint)).ToList();
                 RepositorySnapshot = backupJob.repository;
                 IndexOfLastRestorePoint = backupJob.indexOfLastRestorePoint;
+                StorageStrategy = backupJob.StorageStrategy;
+                Logger = backupJob.Logger;
+                FindRestorePoints = backupJob.FindRestorePoints;
+                FindRestorePoints.DateTime = backupJob.FindRestorePoints.DateTime;
+                FindRestorePoints.MaxNumberOfRestorePoints = backupJob.FindRestorePoints.MaxNumberOfRestorePoints;
+                ClearingRestorePoints = backupJob.ClearingRestorePoints;
             }
 
             public List<JobObject.Snapshot> JobObjectsSnapshots { get; set; }
             public List<RestorePoint.Snapshot> RestorePointsSnapshots { get; set; }
             public IRepository RepositorySnapshot { get; set; }
             public int IndexOfLastRestorePoint { get; set; }
+            public IStorageStrategy StorageStrategy { get; set; }
+            public ILogger Logger { get; set; }
+            public IFindRestorePointsStrategy FindRestorePoints { get; set; }
+            public IClearRestorePointsStrategy ClearingRestorePoints { get; set; }
 
             public BackupJob Restore()
             {
                 var jobObjects = JobObjectsSnapshots.Select(jobObject => jobObject.Restore()).ToList();
                 var restorePoints = RestorePointsSnapshots.Select(restorePoint => restorePoint.Restore()).ToList();
-                IRepository repository = RepositorySnapshot;
-                return new BackupJob(jobObjects, restorePoints, repository, IndexOfLastRestorePoint);
+                return new BackupJob(jobObjects, restorePoints, RepositorySnapshot, IndexOfLastRestorePoint, StorageStrategy, Logger, FindRestorePoints, ClearingRestorePoints);
             }
         }
     }
