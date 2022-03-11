@@ -35,11 +35,58 @@ namespace BackupsExtra.Entities.JobStructure
             return new List<Storage>(storages);
         }
 
+        public void AddJobObjects(List<JobObject> jobObjects)
+        {
+            storages.Add(new Storage(jobObjects));
+        }
+
+        public void Merge(RestorePoint restorePoint)
+        {
+            if (storages.Count == 1) return;
+
+            var jobObjects = restorePoint.GetJobObjects().Except(GetJobObjects()).ToList();
+            if (jobObjects.Count == 0) return;
+
+            storages.Add(new Storage(jobObjects));
+        }
+
         public string GetInformation()
         {
             string information = "Restore point: { " + storages.
                 Aggregate(string.Empty, (current, storage) => current + (storage.GetInformation() + ", "));
             return information.TrimEnd(',', ' ') + " }";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj.GetType() != GetType())
+                return false;
+
+            var other = (RestorePoint)obj;
+            return Equals(other);
+        }
+
+        public bool Equals(RestorePoint other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(storages, Logger, Number, Id, DateTime);
+        }
+
+        private List<JobObject> GetJobObjects()
+        {
+            var jobObjects = new List<JobObject>();
+            foreach (Storage storage in storages)
+            {
+                jobObjects.AddRange(storage.GetJobObjects());
+            }
+
+            return jobObjects;
         }
 
         public class Snapshot

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BackupsExtra.Entities.Repository;
+using BackupsExtra.Services.ClearRestorePointsStrategyService;
 using BackupsExtra.Services.FindRestorePointsStrategyService;
 using BackupsExtra.Services.LoggerStrategyService;
 using BackupsExtra.Services.StorageStrategyService;
@@ -35,6 +36,7 @@ namespace BackupsExtra.Entities.JobStructure
         public IStorageStrategy StorageStrategy { get; set; }
         public ILogger Logger { get; set; }
         public IFindRestorePointsStrategy FindRestorePoints { get; set; }
+        public IClearRestorePointsStrategy ClearingRestorePoints { get; set; }
 
         public void SetRepository(IRepository repository)
         {
@@ -56,7 +58,7 @@ namespace BackupsExtra.Entities.JobStructure
             return this;
         }
 
-        public RestorePoint Backup(List<JobObject> jobObjects)
+        public void Backup(List<JobObject> jobObjects)
         {
             if (jobObjects.Count == 0)
             {
@@ -77,24 +79,30 @@ namespace BackupsExtra.Entities.JobStructure
             restorePoints.Add(restorePoint);
             repository.AddRestorePoint(restorePoint);
             Logger.InformationLogging("Backup process finished, " + GetInformationAboutBackupJob() + "\r\n");
-            return restorePoint;
         }
 
         public void ClearRestorePoints()
         {
+            if (restorePoints.Count == 1)
+            {
+                Logger.ErrorLogging("It is not possible to clear restore points, because BackupJob contains only one restore point");
+                throw new RestorePointException("It is not possible to clear restore points, because BackupJob contains only one restore point");
+            }
+
             Logger.InformationLogging("Starting process of clean restore points in " + GetInformationAboutBackupJob() + "\r\n");
-            List<RestorePoint> restorePoints = FindRestorePoints.ClearRestorePoints(new List<RestorePoint>(this.restorePoints));
-            if (restorePoints.Count == 0)
+            List<RestorePoint> newRestorePoints = FindRestorePoints.ClearRestorePoints(new List<RestorePoint>(restorePoints));
+            if (newRestorePoints.Count == 0)
             {
                 Logger.ErrorLogging("It is not possible to delete all points" + "\r\n");
                 throw new RestorePointException("Error: all restore points deleted");
             }
 
-            var restorePointsNumbers = new List<int>(this.restorePoints.Select(restorePoint => restorePoint.Number)
-                .Except(restorePoints.Select(restorePoint => restorePoint.Number)));
-            repository.ClearRestorePoints(restorePointsNumbers);
-            this.restorePoints = restorePoints;
-            Logger.InformationLogging("Restore points cleared, " + GetInformationAboutBackupJob() + "\r\n");
+            repository.DeleteRestorePoints(restorePoints.Select(restorePoint => restorePoint.Number).ToList());
+
+            restorePoints = ClearingRestorePoints.ClearRestorePoints(restorePoints, newRestorePoints);
+
+            newRestorePoints.ForEach(restorePoint => repository.AddRestorePoint(restorePoint));
+            Logger.InformationLogging("Restore points was cleared, " + GetInformationAboutBackupJob() + "\r\n");
         }
 
         private string GetInformationAboutJobObjects()
