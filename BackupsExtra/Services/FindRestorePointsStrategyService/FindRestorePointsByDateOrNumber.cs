@@ -11,12 +11,13 @@ namespace BackupsExtra.Services.FindRestorePointsStrategyService
         public int MaxNumberOfRestorePoints { get; set; }
         public List<RestorePoint> ClearRestorePoints(List<RestorePoint> restorePoints)
         {
+            restorePoints = restorePoints.Where(restorePoint => restorePoint.DateTime.CompareTo(DateTime) > 0).ToList();
             if (restorePoints.Count > MaxNumberOfRestorePoints)
             {
                 restorePoints.RemoveRange(0, restorePoints.Count - MaxNumberOfRestorePoints);
             }
 
-            return restorePoints.Where(restorePoint => restorePoint.DateTime.CompareTo(DateTime) > 0).ToList();
+            return restorePoints;
         }
     }
 }
