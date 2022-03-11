@@ -7,16 +7,16 @@ namespace BackupsExtra.Entities.Repository
 {
     public class RepositoryWithFileSystem : IRepository
     {
-        public RepositoryWithFileSystem(string path)
+        public RepositoryWithFileSystem(string pathToRepository)
         {
-            Path = path;
+            PathToRepository = pathToRepository;
         }
 
-        public string Path { get; set; }
+        public string PathToRepository { get; set; }
 
         public void AddRestorePoint(RestorePoint restorePoint)
         {
-            string pathToRestorePoint = Path + @"\RestorePoint" + restorePoint.Number;
+            string pathToRestorePoint = PathToRepository + @"\RestorePoint" + restorePoint.Number;
             Directory.CreateDirectory(pathToRestorePoint);
             int i = 0;
             foreach (Storage storage in restorePoint.GetStorages())
@@ -42,7 +42,7 @@ namespace BackupsExtra.Entities.Repository
         {
             foreach (int restorePointNumber in restorePointsNumbers)
             {
-                Directory.Delete(Path + @"\RestorePoint" + restorePointNumber, true);
+                Directory.Delete(PathToRepository + @"\RestorePoint" + restorePointNumber, true);
             }
         }
     }

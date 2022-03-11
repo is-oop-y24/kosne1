@@ -133,7 +133,7 @@ namespace BackupsExtra.Entities.JobStructure
 
         private string GetInformationAboutRepository()
         {
-            return "Repository: { " + repository.Path + " }";
+            return "Repository: { " + repository.PathToRepository + " }";
         }
 
         private string GetInformationAboutBackupJob()

@@ -5,7 +5,7 @@ namespace BackupsExtra.Entities.Repository
 {
     public class RepositoryWithoutFileSystem : IRepository
     {
-        public string Path { get; set; }
+        public string PathToRepository { get; set; }
 
         public void AddRestorePoint(RestorePoint restorePoint)
         {
