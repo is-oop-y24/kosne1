@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using BackupsExtra.Entities.JobStructure;
+using BackupsExtra.Tools.SpecificExceptions;
 
 namespace BackupsExtra.Entities.Repository
 {
@@ -27,9 +29,9 @@ namespace BackupsExtra.Entities.Repository
                 foreach (JobObject jobObject in storage.GetJobObjects())
                 {
                     string pathToArchiveFile =
-                        System.IO.Path.Combine(
+                        Path.Combine(
                             pathToArchiveStorage,
-                            System.IO.Path.GetFileNameWithoutExtension(jobObject.Path) + "_" + restorePoint.Number + System.IO.Path.GetExtension(jobObject.Path) ?? string.Empty);
+                            Path.GetFileName(jobObject.Path) ?? string.Empty);
                     File.Copy(jobObject.Path, pathToArchiveFile, true);
                 }
 
@@ -44,6 +46,31 @@ namespace BackupsExtra.Entities.Repository
             {
                 Directory.Delete(PathToRepository + @"\RestorePoint" + restorePointNumber, true);
             }
+        }
+
+        public void Restore(RestorePoint restorePoint, string location = null)
+        {
+            string fullRestorePointPath = PathToRepository + @"\RestorePoint" + restorePoint.Number;
+            int i = 0;
+            restorePoint.GetStorages().ForEach(storage =>
+            {
+                i++;
+                string storageArchivePath = fullRestorePointPath + @"\Storage" + i + ".zip";
+                if (!File.Exists(storageArchivePath)) throw new FileException("Error: File does not exist");
+
+                string temporaryDirectory = fullRestorePointPath + @"\Storage" + i + @"_tmp\";
+                ZipFile.ExtractToDirectory(storageArchivePath, temporaryDirectory);
+                foreach (string jobObjectFile in Directory.GetFiles(temporaryDirectory))
+                {
+                    string jobObjectFileName = Path.GetFileNameWithoutExtension(jobObjectFile) + Path.GetExtension(jobObjectFile);
+                    string originalFile = !string.IsNullOrWhiteSpace(location) ? location + Path.PathSeparator + jobObjectFileName
+                        : storage.GetJobObjects().First(jobObject => Path.GetFileName(jobObject.Path) == jobObjectFileName).Path;
+
+                    File.Copy(jobObjectFile, originalFile, true);
+                }
+
+                Directory.Delete(temporaryDirectory, true);
+            });
         }
     }
 }
