@@ -36,7 +36,7 @@ namespace IsuExtra.Services.AEUniversityService
 
         public Student AddStudent(AEGroup aeGroup, Student student)
         {
-            if (aeGroup.Students().Count == AEGroup.MaximumNumberOfStudents)
+            if (FindGroup(aeGroup.GroupName).Students().Count == AEGroup.MaximumNumberOfStudents)
             {
                 throw new AEGroupException("Error: the maximum number of students has been reached in the AE group");
             }
