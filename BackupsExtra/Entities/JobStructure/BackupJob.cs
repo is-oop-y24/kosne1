@@ -4,6 +4,7 @@ using System.Linq;
 using BackupsExtra.Entities.Repository;
 using BackupsExtra.Services.ClearRestorePointsStrategyService;
 using BackupsExtra.Services.FindRestorePointsStrategyService;
+using BackupsExtra.Services.FindRestorePointsStrategyService.Strategies;
 using BackupsExtra.Services.LoggerStrategyService;
 using BackupsExtra.Services.StorageStrategyService;
 using BackupsExtra.Tools.SpecificExceptions;
@@ -32,7 +33,7 @@ namespace BackupsExtra.Entities.JobStructure
             int indexOfLastRestorePoint,
             IStorageStrategy storageStrategy,
             ILogger logger,
-            IFindRestorePointsStrategy findRestorePoints,
+            IFindRestorePointsAbstractStrategy findRestorePoints,
             IClearRestorePointsStrategy clearingRestorePoints)
         {
             this.jobObjects = jobObjects;
@@ -47,7 +48,7 @@ namespace BackupsExtra.Entities.JobStructure
 
         public IStorageStrategy StorageStrategy { get; set; }
         public ILogger Logger { get; set; }
-        public IFindRestorePointsStrategy FindRestorePoints { get; set; }
+        public IFindRestorePointsAbstractStrategy FindRestorePoints { get; set; }
         public IClearRestorePointsStrategy ClearingRestorePoints { get; set; }
 
         public void SetRepository(IRepository repository)
@@ -181,8 +182,6 @@ namespace BackupsExtra.Entities.JobStructure
                 StorageStrategy = backupJob.StorageStrategy;
                 Logger = backupJob.Logger;
                 FindRestorePoints = backupJob.FindRestorePoints;
-                FindRestorePoints.DateTime = backupJob.FindRestorePoints.DateTime;
-                FindRestorePoints.MaxNumberOfRestorePoints = backupJob.FindRestorePoints.MaxNumberOfRestorePoints;
                 ClearingRestorePoints = backupJob.ClearingRestorePoints;
             }
 
@@ -192,7 +191,7 @@ namespace BackupsExtra.Entities.JobStructure
             public int IndexOfLastRestorePoint { get; set; }
             public IStorageStrategy StorageStrategy { get; set; }
             public ILogger Logger { get; set; }
-            public IFindRestorePointsStrategy FindRestorePoints { get; set; }
+            public IFindRestorePointsAbstractStrategy FindRestorePoints { get; set; }
             public IClearRestorePointsStrategy ClearingRestorePoints { get; set; }
 
             public BackupJob Restore()

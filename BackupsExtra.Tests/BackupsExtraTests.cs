@@ -5,6 +5,7 @@ using BackupsExtra.Entities.JobStructure;
 using BackupsExtra.Entities.Repository;
 using BackupsExtra.Services.ClearRestorePointsStrategyService;
 using BackupsExtra.Services.FindRestorePointsStrategyService;
+using BackupsExtra.Services.FindRestorePointsStrategyService.Strategies;
 using BackupsExtra.Services.LoggerStrategyService;
 using BackupsExtra.Services.LoggerStrategyService.TimeStrategyService;
 using BackupsExtra.Services.StorageStrategyService;
@@ -25,7 +26,7 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SplitStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByDate(),
+                FindRestorePoints = new FindRestorePointsByIntersection(),
                 ClearingRestorePoints = new DeleteRestorePoints(),
             };
             
@@ -39,7 +40,7 @@ namespace BackupsExtra.Tests
             
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB});
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
-            backupJob.FindRestorePoints.DateTime = DateTime.Now;
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByDate(DateTime.Now));
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB,jobObjectC});
             
             backupJob.ClearRestorePoints();
@@ -57,12 +58,11 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SplitStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByNumber()
-                {
-                    MaxNumberOfRestorePoints = 1,
-                },
+                FindRestorePoints = new FindRestorePointsByIntersection(),
                 ClearingRestorePoints = new DeleteRestorePoints(),
             };
+            
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByNumber(1));
             
             var jobObjectA =
                 new JobObject(@"D:\Users\akoli\RiderProjects\kosne1\BackupsExtra\TestDirectory\FileA.txt");
@@ -91,12 +91,11 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SplitStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByDateAndNumber()
-                {
-                    MaxNumberOfRestorePoints = 2,
-                },
+                FindRestorePoints = new FindRestorePointsByIntersection(),
                 ClearingRestorePoints = new DeleteRestorePoints(),
             };
+            
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByNumber(1));
             
             var jobObjectA =
                 new JobObject(@"D:\Users\akoli\RiderProjects\kosne1\BackupsExtra\TestDirectory\FileA.txt");
@@ -108,7 +107,7 @@ namespace BackupsExtra.Tests
             
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB});
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
-            backupJob.FindRestorePoints.DateTime = DateTime.Now;
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByDate(DateTime.Now));
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB,jobObjectC});
             
             backupJob.ClearRestorePoints();
@@ -126,12 +125,11 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SplitStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByDateOrNumber()
-                {
-                    MaxNumberOfRestorePoints = 1,
-                },
+                FindRestorePoints = new FindRestorePointsByUnion(),
                 ClearingRestorePoints = new DeleteRestorePoints(),
             };
+            
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByNumber(1));
             
             var jobObjectA =
                 new JobObject(@"D:\Users\akoli\RiderProjects\kosne1\BackupsExtra\TestDirectory\FileA.txt");
@@ -142,7 +140,7 @@ namespace BackupsExtra.Tests
             backupJob.AddJobObject(jobObjectA).AddJobObject(jobObjectB).AddJobObject(jobObjectC);
             
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB});
-            backupJob.FindRestorePoints.DateTime = DateTime.Now;
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByDate(DateTime.Now));
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB,jobObjectC});
             
@@ -161,12 +159,11 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SplitStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByDateOrNumber()
-                {
-                    MaxNumberOfRestorePoints = 1,
-                },
-                ClearingRestorePoints = new MergeRestorePoints(),
+                FindRestorePoints = new FindRestorePointsByUnion(),
+                ClearingRestorePoints = new DeleteRestorePoints(),
             };
+            
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByNumber(1));
             
             var jobObjectA =
                 new JobObject(@"D:\Users\akoli\RiderProjects\kosne1\BackupsExtra\TestDirectory\FileA.txt");
@@ -177,7 +174,7 @@ namespace BackupsExtra.Tests
             backupJob.AddJobObject(jobObjectA).AddJobObject(jobObjectB).AddJobObject(jobObjectC);
             
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB});
-            backupJob.FindRestorePoints.DateTime = DateTime.Now;
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByDate(DateTime.Now));
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
             
@@ -197,12 +194,11 @@ namespace BackupsExtra.Tests
                     TimeStrategy = new WithoutTime(),
                 },
                 StorageStrategy = new SingleStorageStrategy(),
-                FindRestorePoints = new FindRestorePointsByDateOrNumber()
-                {
-                    MaxNumberOfRestorePoints = 1,
-                },
-                ClearingRestorePoints = new MergeRestorePoints(),
+                FindRestorePoints = new FindRestorePointsByUnion(),
+                ClearingRestorePoints = new DeleteRestorePoints(),
             };
+            
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByNumber(1));
             
             var jobObjectA =
                 new JobObject(@"D:\Users\akoli\RiderProjects\kosne1\BackupsExtra\TestDirectory\FileA.txt");
@@ -213,7 +209,7 @@ namespace BackupsExtra.Tests
             backupJob.AddJobObject(jobObjectA).AddJobObject(jobObjectB).AddJobObject(jobObjectC);
             
             backupJob.Backup(new List<JobObject> {jobObjectA,jobObjectB});
-            backupJob.FindRestorePoints.DateTime = DateTime.Now;
+            backupJob.FindRestorePoints.AddFindRestorePointStrategy(new FindRestorePointsByDate(DateTime.Now));
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
             backupJob.Backup(new List<JobObject> {jobObjectB,jobObjectC});
             
