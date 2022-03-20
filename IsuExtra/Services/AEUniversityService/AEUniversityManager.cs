@@ -46,7 +46,7 @@ namespace IsuExtra.Services.AEUniversityService
                 throw new StudentException("Error: can not add student in this group");
             }
 
-            if (student.AeGroups().Count == 2)
+            if (IsStudentIsAlreadyInTwoGroups(student.Name))
             {
                 throw new StudentException("Error: student is already in 2 groups");
             }
@@ -130,6 +130,14 @@ namespace IsuExtra.Services.AEUniversityService
             }
 
             return foundStudent.Name != studentName ? null : foundStudent;
+        }
+
+        private bool IsStudentIsAlreadyInTwoGroups(string studentName)
+        {
+            var aeGroups = _university.Courses().SelectMany(aeCourse => aeCourse.Groups()).ToList();
+            int count = aeGroups.Count(aeGroup => aeGroup.FindStudent(studentName) != default);
+
+            return count == 2;
         }
     }
 }
