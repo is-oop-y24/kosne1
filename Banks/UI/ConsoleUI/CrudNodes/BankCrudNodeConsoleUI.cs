@@ -1,8 +1,10 @@
 ﻿using System;
+using Banks.ConsoleUI;
+using Banks.ConsoleUI.CrudNodes;
 using Banks.Entities.Banks;
 using Banks.Entities.Banks.Conditions;
 
-namespace Banks.ConsoleUI.CrudNodes
+namespace Banks.UI.ConsoleUI.CrudNodes
 {
     public class BankCrudNodeConsoleUI : NodeConsoleUI
     {
@@ -86,8 +88,8 @@ namespace Banks.ConsoleUI.CrudNodes
             try
             {
                 Console.WriteLine("Write bank guid");
-                var bankGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                Bank bank = CentralBank.Instance.FindBank(bankGuid);
+                var bankId = new Guid(Console.ReadLine() ?? string.Empty);
+                Bank bank = CentralBank.Instance.FindBank(bankId);
                 _inBankCrudConsoleUi.Bank = bank;
                 _inBankCrudConsoleUi.Launch();
             }

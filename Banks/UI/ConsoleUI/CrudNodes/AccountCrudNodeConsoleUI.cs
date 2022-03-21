@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection.Metadata;
+using Banks.ConsoleUI;
 using Banks.Entities;
 using Banks.Entities.Accounts;
 using Banks.Entities.Banks;
 
-namespace Banks.ConsoleUI.CrudNodes
+namespace Banks.UI.ConsoleUI.CrudNodes
 {
     public class AccountCrudNodeConsoleUI : NodeConsoleUI
     {
@@ -44,8 +44,8 @@ namespace Banks.ConsoleUI.CrudNodes
             try
             {
                 Console.WriteLine("Write client guid");
-                var clientGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                Client client = Bank.FindClient(clientGuid);
+                var clientId = new Guid(Console.ReadLine() ?? string.Empty);
+                Client client = Bank.FindClient(clientId);
 
                 Console.WriteLine("Choose account type 1.Debit 2.Credit 3.Deposit");
                 int type = ReadMenuPoint(3);

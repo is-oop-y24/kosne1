@@ -1,7 +1,7 @@
 ﻿using System;
-using Banks.Models;
+using Banks.Entities;
 
-namespace Banks.ConsoleUI
+namespace Banks.UI.ConsoleUI
 {
     public class SkipTimeNodeConsoleUI : NodeConsoleUI
     {
@@ -33,7 +33,7 @@ namespace Banks.ConsoleUI
         {
             Console.WriteLine("How much days you want to skip?");
             int days = Convert.ToInt32(Console.ReadLine());
-            SkipTimeService.SkipTime(days);
+            TimeMachine.RewindTime(days);
         }
     }
 }

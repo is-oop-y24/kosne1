@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Banks.ConsoleUI
+namespace Banks.UI.ConsoleUI
 {
     public abstract class NodeConsoleUI
     {

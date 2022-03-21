@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Transactions;
-using Banks.ConsoleUI.CrudNodes;
-using Banks.Exceptions.Particular;
-using Banks.Interfaces;
-using Banks.Models;
+using Banks.ConsoleUI;
+using Banks.Entities.Banks;
+using Banks.Entities.Transactions;
+using Banks.Tools.Exceptions;
+using Banks.UI.ConsoleUI.CrudNodes;
 
-namespace Banks.ConsoleUI
+namespace Banks.UI.ConsoleUI
 {
     public class MainNodeConsoleUI : NodeConsoleUI
     {
@@ -45,12 +44,12 @@ namespace Banks.ConsoleUI
             try
             {
                 Console.WriteLine("Write transaction guid");
-                var transactionGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                ITransaction transaction = CentralBank.GetInstance().GetTransaction(transactionGuid);
+                var transactionId = new Guid(Console.ReadLine() ?? string.Empty);
+                ITransaction transaction = CentralBank.Instance.FindTransaction(transactionId);
                 _transactionNode.Transaction = transaction;
                 _transactionNode.Launch();
             }
-            catch (CentralBankException)
+            catch (BanksException)
             {
                 Console.WriteLine("There is not transaction with this guid");
             }

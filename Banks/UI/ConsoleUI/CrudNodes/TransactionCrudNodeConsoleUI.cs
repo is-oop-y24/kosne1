@@ -1,7 +1,8 @@
 ﻿using System;
-using Banks.Models;
-using Banks.Models.Transactions;
-using Banks.Tools;
+using Banks.Entities.Banks;
+using Banks.Entities.Transactions;
+using Banks.UI.ConsoleUI;
+using Newtonsoft.Json;
 
 namespace Banks.ConsoleUI.CrudNodes
 {
@@ -24,7 +25,7 @@ namespace Banks.ConsoleUI.CrudNodes
                         LaunchCreate();
                         break;
                     case 2:
-                        Console.WriteLine(ObjectDumper.Dump(CentralBank.GetInstance().GetTransactions()));
+                        Console.WriteLine(JsonConvert.SerializeObject(CentralBank.Instance.GetTransactions()));
                         break;
                     case 3:
                         Exit();
@@ -45,10 +46,10 @@ namespace Banks.ConsoleUI.CrudNodes
                         Console.WriteLine("Write bank guid, account guid, refill size");
                         try
                         {
-                            var bankGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                            var accountGuid = new Guid(Console.ReadLine() ?? string.Empty);
+                            var bankId = new Guid(Console.ReadLine() ?? string.Empty);
+                            var accountId = new Guid(Console.ReadLine() ?? string.Empty);
                             decimal value = Convert.ToDecimal(Console.ReadLine());
-                            CentralBank.GetInstance().AddTransaction(new Refill(bankGuid, accountGuid, value));
+                            CentralBank.Instance.CreateTransaction(new Refill(value, bankId, accountId));
                         }
                         catch (FormatException e)
                         {
@@ -60,12 +61,12 @@ namespace Banks.ConsoleUI.CrudNodes
                         Console.WriteLine("Write bank from guid, account from guid, bank to guid, account to guid, refill size");
                         try
                         {
-                            var bankFromGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                            var accountFromGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                            var bankToGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                            var accountToGuid = new Guid(Console.ReadLine() ?? string.Empty);
+                            var bankFromId = new Guid(Console.ReadLine() ?? string.Empty);
+                            var accountFromId = new Guid(Console.ReadLine() ?? string.Empty);
+                            var bankToId = new Guid(Console.ReadLine() ?? string.Empty);
+                            var accountToId = new Guid(Console.ReadLine() ?? string.Empty);
                             decimal value = Convert.ToDecimal(Console.ReadLine());
-                            CentralBank.GetInstance().AddTransaction(new Transaction(bankFromGuid, accountFromGuid, bankToGuid, accountToGuid, value));
+                            CentralBank.Instance.CreateTransaction(new Transaction(value, bankFromId, accountFromId, bankToId, accountToId));
                         }
                         catch (FormatException e)
                         {
@@ -77,10 +78,10 @@ namespace Banks.ConsoleUI.CrudNodes
                         Console.WriteLine("Write bank guid, account guid, refill size");
                         try
                         {
-                            var bankGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                            var accountGuid = new Guid(Console.ReadLine() ?? string.Empty);
+                            var bankId = new Guid(Console.ReadLine() ?? string.Empty);
+                            var accountId = new Guid(Console.ReadLine() ?? string.Empty);
                             decimal value = Convert.ToDecimal(Console.ReadLine());
-                            CentralBank.GetInstance().AddTransaction(new Withdrawal(bankGuid, accountGuid, value));
+                            CentralBank.Instance.CreateTransaction(new Withdrawal(value, bankId, accountId));
                         }
                         catch (FormatException e)
                         {

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
+using Banks.ConsoleUI;
 using Banks.Entities;
 using Banks.Entities.Banks;
-using Banks.Models;
-using Banks.Tools;
+using Newtonsoft.Json;
 
-namespace Banks.ConsoleUI.CrudNodes
+namespace Banks.UI.ConsoleUI.CrudNodes
 {
     public class ClientCrudNodeConsoleUI : NodeConsoleUI
     {
@@ -61,8 +60,8 @@ namespace Banks.ConsoleUI.CrudNodes
             try
             {
                 Console.WriteLine("Write guid of updating client");
-                var clientGuid = new Guid(Console.ReadLine() ?? string.Empty);
-                Client client = Bank.GetClient(clientGuid);
+                var clientId = new Guid(Console.ReadLine() ?? string.Empty);
+                Client client = Bank.FindClient(clientId);
                 Console.WriteLine("Choose what info you want to update\n 1.Address \n 2.Passport");
                 int point = ReadMenuPoint(2);
                 switch (point)
@@ -85,8 +84,7 @@ namespace Banks.ConsoleUI.CrudNodes
 
         private void ReadLaunch()
         {
-            string clientsInfo = ObjectDumper.Dump(Bank.GetClients());
-            Console.WriteLine(clientsInfo);
+            Console.WriteLine(JsonConvert.SerializeObject(Bank.GetClients()));
         }
     }
 }

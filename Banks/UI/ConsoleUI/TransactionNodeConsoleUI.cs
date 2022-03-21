@@ -1,8 +1,9 @@
 ﻿using System;
-using Banks.Exceptions;
-using Banks.Interfaces;
+using Banks.Entities.Banks;
+using Banks.Entities.Transactions;
+using Banks.Tools.Exceptions;
 
-namespace Banks.ConsoleUI
+namespace Banks.UI.ConsoleUI
 {
     public class TransactionNodeConsoleUI : NodeConsoleUI
     {
@@ -37,7 +38,7 @@ namespace Banks.ConsoleUI
 
         private void RealizeLaunch()
         {
-            if (Transaction.IsRealized)
+            if (Transaction.WasRealized)
             {
                 Console.WriteLine("This transaction was already realized");
                 return;
@@ -45,10 +46,10 @@ namespace Banks.ConsoleUI
 
             try
             {
-                Transaction.Realize();
+                CentralBank.Instance.TransactionRealize(Transaction);
                 Console.WriteLine("Transaction was successfully realized");
             }
-            catch (BankSystemException e)
+            catch (BanksException e)
             {
                 Console.WriteLine(e);
                 Console.WriteLine("Transaction data is wrong");
@@ -57,7 +58,7 @@ namespace Banks.ConsoleUI
 
         private void CancelLaunch()
         {
-            if (Transaction.IsCanceled)
+            if (Transaction.WasCanceled)
             {
                 Console.WriteLine("This transaction was already canceled");
                 return;
@@ -65,10 +66,10 @@ namespace Banks.ConsoleUI
 
             try
             {
-                Transaction.Cancel();
+                CentralBank.Instance.TransactionCanceled(Transaction);
                 Console.WriteLine("Transaction was successfully canceled");
             }
-            catch (BankSystemException e)
+            catch (BanksException e)
             {
                 Console.WriteLine(e);
                 Console.WriteLine("Transaction data is wrong");

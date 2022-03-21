@@ -1,7 +1,8 @@
 ﻿using System;
-using Banks.Models;
+using Banks.ConsoleUI;
+using Banks.Entities.Banks;
 
-namespace Banks.ConsoleUI.CrudNodes
+namespace Banks.UI.ConsoleUI.CrudNodes
 {
     public class InBankCrudConsoleUI : NodeConsoleUI
     {
