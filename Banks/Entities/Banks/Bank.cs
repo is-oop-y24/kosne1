@@ -37,17 +37,17 @@ namespace Banks.Entities.Banks
 
         public void Remove(Client client) => Clients.Remove(client);
 
-        public IAccount CreateAccount<T>(Client client)
+        public IAccount CreateAccount<T>(Client client, decimal startCash = 0)
         where T : IAccount
         {
             IAccount account = null;
 
             if (typeof(T) == typeof(CreditAccount))
-                account = new CreditAccount(client, this);
+                account = new CreditAccount(client, this, startCash);
             if (typeof(T) == typeof(DepositAccount))
-                account = new DepositAccount(client, this);
+                account = new DepositAccount(client, this, startCash);
             if (typeof(T) == typeof(DebitAccount))
-                account = new DebitAccount(client, this);
+                account = new DebitAccount(client, this, startCash);
 
             Accounts.Add(account);
             return account;
@@ -57,29 +57,43 @@ namespace Banks.Entities.Banks
 
         public void RemoveAccount(IAccount account) => Accounts.Remove(account);
 
-        public void MakeMonthAddition()
+        public void MakeMonthlyAddition(DateTime operationDate)
         {
             Accounts.ForEach(account =>
             {
-                account.SetCash(account.VirtualCash + account.Cash, Id);
-                account.SetVirtualCash(0, Id);
+                account.SetCash(account.VirtualCash + account.Cash, Id, operationDate);
+                account.SetVirtualCash(0, Id, operationDate);
             });
         }
 
-        public void MakeDailyAddition()
+        public void MakeDailyAddition(DateTime operationDate)
         {
-            Accounts.ForEach(account => MakeDailyAddition(account));
+            Accounts.ForEach(acc => MakeDailyAddition(acc, operationDate));
         }
 
-        private void MakeDailyAddition(IAccount account)
+        private void MakeDailyAddition(IAccount account, DateTime operationDate)
         {
             if (account is DebitAccount)
-                account.SetVirtualCash(CalculationMoneyForDebitAccount(account.Cash) + account.VirtualCash, Id);
+            {
+                account.SetVirtualCash(CalculationMoneyForDebitAccount(account.Cash) + account.VirtualCash, Id, operationDate);
+            }
             else if (account is DepositAccount)
-                account.SetVirtualCash(CalculationMoneyForDepositAccount(account.Cash) + account.VirtualCash, Id);
+            {
+                decimal deltaCash = 0;
+                if (operationDate < account.CreationDate + BankConditions.DepositCondition.Lifetime)
+                    deltaCash = CalculationMoneyForDepositAccount(account.Cash);
+                else
+                    deltaCash = CalculationMoneyForDebitAccount(account.Cash);
+                account.SetVirtualCash(deltaCash + account.VirtualCash, Id, operationDate);
+            }
             else if (account is CreditAccount)
-                account.SetVirtualCash(CalculateMoneyForCreditAccount(account.Cash) + account.VirtualCash, Id);
-            else throw new BankException("Error: can't make daily addition this type");
+            {
+                account.SetVirtualCash(CalculateMoneyForCreditAccount(account.Cash) + account.VirtualCash, Id, operationDate);
+            }
+            else
+            {
+                throw new BankException("Error: can't make daily addition this type");
+            }
         }
 
         private decimal CalculationMoneyForDepositAccount(decimal money)
