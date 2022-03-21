@@ -15,12 +15,12 @@ namespace Banks.Entities.Accounts
             CreationDate = DateTime.Now;
         }
 
-        protected Bank Bank { get; }
         public Guid Id { get; }
         public Client Client { get; }
         public decimal Cash { get; protected set; }
         public decimal VirtualCash { get; protected set; }
         public DateTime CreationDate { get; }
+        protected Bank Bank { get; }
 
         public abstract void SetCash(decimal money, Guid bankId, DateTime dateTime = default);
         public abstract void SetVirtualCash(decimal money, Guid bankId, DateTime dateTime = default);
