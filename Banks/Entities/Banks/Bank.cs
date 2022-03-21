@@ -20,11 +20,11 @@ namespace Banks.Entities.Banks
             BankConditions = bankConditions;
         }
 
+        public BankConditions BankConditions { get; }
         public Guid Id { get; }
         public string Name { get; }
         private List<Client> Clients { get; }
         private List<IAccount> Accounts { get; }
-        public BankConditions BankConditions { get; }
 
         public Client AddClient(string firstName, string secondName)
         {
