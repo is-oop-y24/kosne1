@@ -39,6 +39,12 @@ namespace Banks.Entities.Banks
         public void RemoveBank(Bank bank) => Banks.Remove(bank);
         public List<Bank> GetBanks() => new List<Bank>(Banks);
 
+        public ITransaction CreateTransaction(ITransaction transaction)
+        {
+            Transactions.Add(transaction);
+            return transaction;
+        }
+
         public void TransactionRealize(ITransaction transaction)
         {
             if (transaction.WasRealized) throw new TransactionException("Error: transaction already realized");
@@ -123,6 +129,8 @@ namespace Banks.Entities.Banks
         {
             return Transactions.FirstOrDefault(transaction => transaction.Id == transactionId);
         }
+
+        public List<ITransaction> GetTransactions() => new List<ITransaction>(Transactions);
 
         public void MakeMonthlyAddition(DateTime operationDate)
         {

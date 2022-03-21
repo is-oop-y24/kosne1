@@ -59,6 +59,7 @@ namespace Banks.Entities.Banks
         public bool RemoveAccount(IAccount account) => Accounts.Remove(account);
 
         public List<IAccount> GetAccounts() => new List<IAccount>(Accounts);
+        public List<Client> GetClients() => new List<Client>(Clients);
 
         public void MakeMonthlyAddition(DateTime operationDate)
         {
