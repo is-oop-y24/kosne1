@@ -1,9 +1,11 @@
 ﻿using System;
+using Banks.Entities.ClientInformationStrategies;
+using Banks.Tools.ObserverPattern;
 using Banks.Tools.SpecificExceptions;
 
 namespace Banks.Entities
 {
-    public class Client
+    public class Client : IEventListenear
     {
         public Client(string firstName, string secondName, Guid bankId)
         {
@@ -23,9 +25,12 @@ namespace Banks.Entities
         public string SecondName { get; }
         public string Address { get; private set; }
         public string PassportNumber { get; private set; }
-
         public Guid BankId { get; private set; }
+
+        public IInformationStrategy InformationStrategy { get; set; } = null;
+
         public bool Confirmation => Address != string.Empty && PassportNumber != string.Empty;
+        public string FullName => $"{FirstName} {SecondName}";
 
         public Client AddAddress(string address)
         {
@@ -46,6 +51,12 @@ namespace Banks.Entities
 
             PassportNumber = passportNumber;
             return this;
+        }
+
+        public void ReactToEvent(string eventName)
+        {
+            if (InformationStrategy == null) return;
+            InformationStrategy.Inform(FullName, eventName + " was changed");
         }
     }
 }
