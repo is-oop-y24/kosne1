@@ -16,9 +16,6 @@ namespace Banks.Entities.Banks
             Transactions = new List<ITransaction>();
         }
 
-        private List<Bank> Banks { get; }
-        private List<ITransaction> Transactions { get; }
-
         // singleton attempted thread-safety using double-check locking
         public static CentralBank Instance
         {
@@ -33,6 +30,9 @@ namespace Banks.Entities.Banks
                 return instance;
             }
         }
+
+        private List<Bank> Banks { get; }
+        private List<ITransaction> Transactions { get; }
 
         public void AddBank(Bank bank) => Banks.Add(bank);
         public Bank FindBank(Guid id) => Banks.FirstOrDefault(bank => bank.Id == id);

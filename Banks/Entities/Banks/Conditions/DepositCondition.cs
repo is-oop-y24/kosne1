@@ -8,15 +8,15 @@ namespace Banks.Entities.Banks.Conditions
         {
             MaxInterest = maxInterest;
             ValueForMaxInterest = valueForMaxInterest;
-            EndTime = DateTime.Now + lifetime;
+            Lifetime = lifetime;
         }
 
-        public string ConditionName => "Information about conditions for deposit accounts";
-        public DepositCondition DefaultValue => new (0, 0, TimeSpan.Zero);
-
+        public static string ConditionName { get; } = "Information about conditions for deposit accounts";
         public double MaxInterest { get; }
         public decimal ValueForMaxInterest { get; }
-        public DateTime EndTime { get; }
+        public TimeSpan Lifetime { get; }
+        public static DepositCondition DefaultValue() => new (0, 0, TimeSpan.Zero);
+
         public double GetInterest(decimal value)
         {
             if (value >= ValueForMaxInterest) return MaxInterest;

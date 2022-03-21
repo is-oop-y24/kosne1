@@ -11,6 +11,6 @@
         public decimal Limit { get; }
         public decimal FixCommission { get; }
         public string ConditionName { get; } = "Information about credit accounts";
-        public CreditCondition DefaultValue { get; } = new (0, 0);
+        public static CreditCondition DefaultValue() => new (0, 0);
     }
 }
