@@ -11,6 +11,8 @@ namespace Banks.Entities.Transactions
         {
             Id = Guid.NewGuid();
             Size = size;
+            wasRealized = false;
+            wasCanceled = false;
         }
 
         public Guid Id { get; }
