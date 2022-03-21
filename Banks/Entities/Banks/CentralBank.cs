@@ -37,6 +37,7 @@ namespace Banks.Entities.Banks
         public void AddBank(Bank bank) => Banks.Add(bank);
         public Bank FindBank(Guid id) => Banks.FirstOrDefault(bank => bank.Id == id);
         public void RemoveBank(Bank bank) => Banks.Remove(bank);
+        public List<Bank> GetBanks() => new List<Bank>(Banks);
 
         public void TransactionRealize(ITransaction transaction)
         {

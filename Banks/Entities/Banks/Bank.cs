@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Banks.Entities.Accounts;
 using Banks.Entities.Banks.Conditions;
 using Banks.Tools.SpecificExceptions;
@@ -55,7 +56,9 @@ namespace Banks.Entities.Banks
 
         public IAccount FindAccount(Guid id) => Accounts.FirstOrDefault(account => account.Id == id);
 
-        public void RemoveAccount(IAccount account) => Accounts.Remove(account);
+        public bool RemoveAccount(IAccount account) => Accounts.Remove(account);
+
+        public List<IAccount> GetAccounts() => new List<IAccount>(Accounts);
 
         public void MakeMonthlyAddition(DateTime operationDate)
         {

@@ -8,7 +8,7 @@ namespace Banks.Entities.Banks.Conditions
             MaxTransactionValue = maxTransactionValue;
         }
 
-        public static string ConditionName { get; } = "Information about condition for not confirmed rules";
+        public static string ConditionName { get; } = "Information about condition for not confirmed Conditions";
         public decimal MaxTransactionValue { get; private set; }
         public static UnconfirmedCondition DefaultValue() => new UnconfirmedCondition(0);
     }
