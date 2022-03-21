@@ -31,7 +31,7 @@ namespace IsuExtra.Entities.AEUniversityStructure
 
         public AEGroup FindGroup(AEGroupName groupName)
         {
-            return _groups.Find(group => group.GroupName == groupName);
+            return _groups.Find(group => Equals(group.GroupName, groupName));
         }
 
         public AEGroup AddGroup(AEGroupName groupName)

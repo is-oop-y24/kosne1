@@ -1,4 +1,4 @@
-﻿using IsuExtra.Entities.Interface;
+﻿using IsuExtra.Entities.GroupInterface;
 
 namespace IsuExtra.Entities.ScheduleStructure
 {

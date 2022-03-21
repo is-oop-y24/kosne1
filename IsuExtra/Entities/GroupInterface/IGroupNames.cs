@@ -1,4 +1,4 @@
-﻿namespace IsuExtra.Entities.Interface
+﻿namespace IsuExtra.Entities.GroupInterface
 {
     public interface IGroupNames
     {

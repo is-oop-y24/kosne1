@@ -1,5 +1,5 @@
 ﻿using System;
-using IsuExtra.Entities.Interface;
+using IsuExtra.Entities.GroupInterface;
 using IsuExtra.Tools.SpecificExceptions.NameOfUniversityStructuresExceptions;
 
 namespace IsuExtra.Entities.NamesOfUniversityStructures

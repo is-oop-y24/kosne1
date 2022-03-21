@@ -1,5 +1,5 @@
 ﻿using System;
-using IsuExtra.Entities.Interface;
+using IsuExtra.Entities.GroupInterface;
 using IsuExtra.Entities.ScheduleStructure;
 using IsuExtra.Entities.UniversityFacilities;
 using IsuExtra.Entities.UniversityPeople;
