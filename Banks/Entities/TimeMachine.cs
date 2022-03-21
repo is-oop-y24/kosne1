@@ -12,6 +12,7 @@ namespace Banks.Entities
             {
                 if (current.Day == 1) CentralBank.Instance.MakeMonthlyAddition(current);
                 CentralBank.Instance.MakeDailyAddition(current);
+                current += new TimeSpan(1, 0, 0, 0);
             }
         }
     }
