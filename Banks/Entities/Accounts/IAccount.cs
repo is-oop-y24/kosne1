@@ -10,7 +10,7 @@ namespace Banks.Entities.Accounts
         decimal VirtualCash { get; }
         DateTime CreationDate { get; }
 
-        void SetCash(decimal money, Guid bankId);
-        void SetVirtualCash(decimal money, Guid bankId);
+        void SetCash(decimal money, Guid bankId, DateTime dateTime);
+        void SetVirtualCash(decimal money, Guid bankId, DateTime dateTime);
     }
 }

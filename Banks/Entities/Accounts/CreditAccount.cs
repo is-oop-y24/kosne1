@@ -1,7 +1,6 @@
 ﻿using System;
 using Banks.Entities.Banks;
 using Banks.Tools.Exceptions.SpecificExceptions;
-using Banks.Tools.SpecificExceptions;
 
 namespace Banks.Entities.Accounts
 {
@@ -12,15 +11,15 @@ namespace Banks.Entities.Accounts
         {
         }
 
-        public override void SetCash(decimal money, Guid bankId)
+        public override void SetCash(decimal money, Guid bankId, DateTime dateTime = default)
         {
             if (Bank.Id != bankId) throw new AccountException("Error: ID does not match bank ID");
-            if (Bank.BankConditions.CreditCondition.Limit < money)
+            if (Bank.BankConditions.CreditCondition.Limit > money)
                 throw new AccountException("Error: the amount of money is less than the limit balance");
             Cash = money;
         }
 
-        public override void SetVirtualCash(decimal money, Guid bankId)
+        public override void SetVirtualCash(decimal money, Guid bankId, DateTime dateTime = default)
         {
             if (Bank.Id != bankId) throw new AccountException("Error: ID does not match bank ID");
             VirtualCash = money;

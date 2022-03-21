@@ -12,15 +12,16 @@ namespace Banks.Entities.Accounts
         {
         }
 
-        public override void SetCash(decimal money, Guid bankId)
+        public override void SetCash(decimal money, Guid bankId, DateTime dateTime = default)
         {
+            if (dateTime == default) dateTime = DateTime.Now;
             if (Bank.Id != bankId) throw new AccountException("Error: ID does not match bank ID");
-            if (DateTime.Now < Bank.BankConditions.DepositCondition.EndTime && Cash <= money)
+            if (dateTime < CreationDate + Bank.BankConditions.DepositCondition.Lifetime && Cash >= money)
                 throw new AccountException("Error: it is not possible to withdraw money before the time expires");
             Cash = money;
         }
 
-        public override void SetVirtualCash(decimal money, Guid bankId)
+        public override void SetVirtualCash(decimal money, Guid bankId, DateTime dateTime = default)
         {
             if (Bank.Id != bankId) throw new AccountException("Error: ID does not match bank ID");
             VirtualCash = money;

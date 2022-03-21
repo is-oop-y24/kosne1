@@ -9,7 +9,7 @@ namespace Banks.Entities.Accounts
         {
             Id = Guid.NewGuid();
             Client = client;
-            this.Bank = bank;
+            Bank = bank;
             Cash = cash;
             VirtualCash = 0;
             CreationDate = DateTime.Now;
@@ -22,7 +22,7 @@ namespace Banks.Entities.Accounts
         public decimal VirtualCash { get; protected set; }
         public DateTime CreationDate { get; }
 
-        public abstract void SetCash(decimal money, Guid bankId);
-        public abstract void SetVirtualCash(decimal money, Guid bankId);
+        public abstract void SetCash(decimal money, Guid bankId, DateTime dateTime = default);
+        public abstract void SetVirtualCash(decimal money, Guid bankId, DateTime dateTime = default);
     }
 }
