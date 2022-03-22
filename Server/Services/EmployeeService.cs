@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Server.DbContexts;
-using Server.ReportsExceptions;
 using Server.ReportsExceptions.Specific;
 using Server.Services.Interfaces;
 
@@ -39,7 +36,7 @@ namespace Server.Services
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task Remove(Guid id)
+        public async Task Delete(Guid id)
         {
             var employee = await FindById(id);
             if (employee == null) return;
@@ -114,6 +111,14 @@ namespace Server.Services
             }
 
             return bosses;
+        }
+
+        public async Task Remove(Guid id)
+        {
+            var employee = await FindById(id);
+            if (employee == null) return;
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
         }
     }
 }
