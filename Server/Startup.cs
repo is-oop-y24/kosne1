@@ -24,7 +24,7 @@ namespace Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services  
+            services
                 .AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
@@ -42,6 +42,8 @@ namespace Server
             
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<ISprintReportService, SprintReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
