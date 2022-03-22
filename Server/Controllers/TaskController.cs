@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Server.ReportsExceptions;
 using Server.Services.Interfaces;
 using TaskStatus = DAL.Models.TaskStatus;
@@ -109,8 +108,8 @@ namespace Server.Controllers
         {
             try
             {
-                var task = await _service.ChangeDescription(taskId, newDescription, employeeId);
-                return Ok(task);
+                var taskChange = await _service.ChangeDescription(taskId, newDescription, employeeId);
+                return Ok(taskChange);
             }
             catch (ReportsGlobalException e)
             {
@@ -123,8 +122,8 @@ namespace Server.Controllers
         {
             try
             {
-                var task = await _service.WriteComment(taskId, employeeId, text);
-                return Ok(task);
+                var comment = await _service.WriteComment(taskId, employeeId, text);
+                return Ok(comment);
             }
             catch (ReportsGlobalException e)
             {
