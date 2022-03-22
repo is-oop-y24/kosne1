@@ -77,7 +77,7 @@ namespace Server.Services
             List<EmployeeModel> squad = new() { boss };
             for (var i = 0; i < squad.Count; i++)
             {
-                var employee = squad[i].Boss;
+                var employee = squad[i];
                 if (employee != null) squad.AddRange(await GetSlavesByBoss(employee.Id));
             }
 
