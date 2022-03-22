@@ -40,12 +40,13 @@ namespace Server.Services
                 _reportService.Update(report);
             });
             await _context.SprintReports.AddAsync(sprintReport);
+            await _context.SaveChangesAsync();
             return sprintReport;
         }
         
         public List<SprintReportModel> GetAll()
         {
-            return _context.SprintReports.ToList();
+            return _context.SprintReports.Include(s => s.Employee).Include(s => s.Reports).ToList();
         }
         
         public async Task<SprintReportModel?> FindById(Guid id)

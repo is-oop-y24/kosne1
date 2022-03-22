@@ -29,6 +29,10 @@ namespace Server
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.Formatting = Formatting.Indented;
+                    options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                    options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                    options.SerializerSettings.MaxDepth = 5;
                 });
             services.AddSwaggerGen(c =>
             {

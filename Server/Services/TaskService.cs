@@ -32,7 +32,7 @@ namespace Server.Services
 
         public List<TaskModel> GetAll()
         {
-            return _context.Tasks.ToList();
+            return _context.Tasks.Include(t => t.Executor).ToList();
         }
 
         public async Task<List<TaskModel>> GetByExecutor(Guid employeeId)
@@ -40,7 +40,7 @@ namespace Server.Services
             var employee = await _employeeService.FindById(employeeId);
             if (employee == null) throw new WrongIdException("Wrong employee id");
 
-            return _context.Tasks.ToList()
+            return _context.Tasks.Include(t => t.Executor).ToList()
                 .Where(task => task.Executor != null && task.Executor.Id == employeeId).ToList();
         }
 

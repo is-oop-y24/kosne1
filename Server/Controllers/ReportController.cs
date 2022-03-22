@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using Server.ReportsExceptions;
 using Server.Services.Interfaces;
 
@@ -25,7 +24,7 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(_reportService.Create(employeeId));
+                return Ok(await _reportService.Create(employeeId));
             }
             catch (Exception e)
             {
@@ -38,7 +37,7 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(_sprintReportService.Create(employeeId));
+                return Ok(await _sprintReportService.Create(employeeId));
             }
             catch (Exception e)
             {
@@ -60,7 +59,7 @@ namespace Server.Controllers
                 return NotFound();
             }
 
-            return Ok(_reportService.FindById(reportId));
+            return Ok(_reportService.GetAll());
         }
 
         [HttpGet("sprint")]
@@ -85,7 +84,7 @@ namespace Server.Controllers
         {
             try
             {
-                var report = _reportService.AddTask(reportId, taskId, employeeId);
+                var report = await _reportService.AddTask(reportId, taskId, employeeId);
                 return Ok(report);
             }
             catch (ReportsGlobalException e)

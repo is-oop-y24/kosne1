@@ -95,7 +95,7 @@ namespace Server.Controllers
             try
             {
                 await _service.ChangeStatus(taskId, TaskStatus.Finished, changerId);
-                return Ok(_service.FindById(taskId));
+                return Ok();
             }
             catch (ReportsGlobalException e)
             {

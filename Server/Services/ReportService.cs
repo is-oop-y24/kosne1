@@ -37,6 +37,7 @@ namespace Server.Services
             
             ReportModel report = new ReportModel(Guid.NewGuid(), employee, DateTime.Now, tasks);
             await _context.Reports.AddAsync(report);
+            await _context.SaveChangesAsync();
             return report;
         }
 
@@ -49,11 +50,11 @@ namespace Server.Services
 
         public List<ReportModel> GetCurrents()
         {
-            return _context.Reports.Where(r => r.AtCurrentSprint).ToList();
+            return _context.Reports.Include(r => r.Employee).Include(r => r.Tasks).Where(r => r.AtCurrentSprint).ToList();
         }
         public List<ReportModel> GetAll()
         {
-            return _context.Reports.ToList();
+            return _context.Reports.Include(r => r.Employee).Include(r => r.Tasks).ToList();
         }
 
         public async Task Update(ReportModel report)
