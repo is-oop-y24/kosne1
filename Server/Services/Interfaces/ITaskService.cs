@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAL.Models;
-using Server.ReportsExceptions.Specific;
 using TaskStatus = DAL.Models.TaskStatus;
 
 namespace Server.Services.Interfaces
@@ -14,6 +13,7 @@ namespace Server.Services.Interfaces
         List<TaskModel> GetAll();
 
         Task<List<TaskModel>> GetByExecutor(Guid employeeId);
+        Task<List<TaskModel>> GetFinishedByExecutor(Guid employeeId);
 
         Task<List<TaskModel>> GetByChanger(Guid changerId);
 
