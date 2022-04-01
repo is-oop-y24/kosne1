@@ -1,8 +1,10 @@
-﻿namespace BackupsExtra
+﻿using System;
+
+namespace BackupsExtra
 {
-    internal class Program
+    class Program
     {
-        private static void Main()
+        static void Main(string[] args)
         {
         }
     }
